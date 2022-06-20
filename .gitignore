@@ -2,10 +2,12 @@
 
 # compiled output
 /dist
+/dist_prev
 /tmp
 /out-tsc
 /app-builds
 /release
+/release_prev
 main.js
 src/**/*.js
 !src/karma.conf.js
