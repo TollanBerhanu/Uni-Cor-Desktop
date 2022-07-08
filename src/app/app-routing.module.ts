@@ -5,15 +5,13 @@ import { PageNotFoundComponent } from './shared/components';
 import { HomeRoutingModule } from './home/home-routing.module';
 import { DetailRoutingModule } from './detail/detail-routing.module';
 import { ScoreExamComponent } from './score-exam/score-exam.component';
+import { BaseLayoutComponent } from './common/base-layout/base-layout.component';
 
 const routes: Routes = [
   {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
-  },
-  {
-    path: 'score-exam', component: ScoreExamComponent
+    path: '', component: BaseLayoutComponent, children: [
+      { path: 'score-exam', component: ScoreExamComponent }
+    ]
   },
   {
     path: '**',

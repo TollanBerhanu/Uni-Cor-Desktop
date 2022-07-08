@@ -23,12 +23,21 @@ import { HeaderComponent } from './common/header/header.component';
 import { ScoreExamComponent } from './score-exam/score-exam.component';
 import { ManageExamComponent } from './manage-exam/manage-exam.component';
 import { StudentsComponent } from './students/students.component';
+import { BaseLayoutComponent } from './common/base-layout/base-layout.component';
 
 // AoT requires an exported function for factories
 const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>  new TranslateHttpLoader(http, './assets/i18n/', '.json');
 
 @NgModule({
-  declarations: [AppComponent, SidebarComponent, HeaderComponent, ScoreExamComponent, ManageExamComponent, StudentsComponent],
+  declarations: [
+    AppComponent,
+    SidebarComponent,
+    HeaderComponent,
+    ScoreExamComponent,
+    ManageExamComponent,
+    StudentsComponent,
+    BaseLayoutComponent
+  ],
   imports: [
     BrowserModule,
     FormsModule,
