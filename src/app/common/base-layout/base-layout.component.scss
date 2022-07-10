@@ -1,0 +1,46 @@
+$secondary-color: #6ba7b1;
+$sidebar-text-color: #8d949e;
+$sidebar-active-border-color: #18c7e6;
+$sidebar-active-bg-color: #11111a;
+
+div.base_content{
+    height: 100%;
+    position: relative;
+    top: -120px;   
+}
+div.main_content{
+    margin-top: -100px;
+    padding: 0px;
+}
+
+div.side_bar{
+    // width: 15%;
+//    background-color: #18c7e6;
+//    background-color: $secondary-color;
+}
+div.nav_brand{
+    border-bottom: 2px solid $sidebar-active-border-color;
+}
+h2.app_title{
+    // text-transform: uppercase;
+    font-variant: small-caps;
+    font-family: 'agency fb';
+    // font-family: 'magneto';
+    font-size: 32px;
+    font-weight: bold;
+    color: #ddd;
+}
+
+span.menu-text{
+    color: #9ca3af !important;
+    font-size: large !important;
+}
+a.side_bar_link:hover{
+    border-right: 5px solid $sidebar-active-border-color;
+    background-color: $sidebar-active-bg-color !important;
+    color: #ccc !important;
+}
+a.active{
+    background-color: $sidebar-active-bg-color;
+    border-right: 5px solid $sidebar-active-border-color;
+ }

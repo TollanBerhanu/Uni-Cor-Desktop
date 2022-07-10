@@ -2,9 +2,7 @@
 		<!--begin::Header Mobile-->
 		<div id="kt_header_mobile" class="header-mobile align-items-center header-mobile-fixed">
 			<!--begin::Logo-->
-			<a href="index.html">
-				<img alt="Logo" src="assets/media/logos/logo-light.png" />
-			</a>
+				<img src="assets/images/unicor_4.png" height="60" alt="Uni-Cor Logo">
 			<!--end::Logo-->
 			<!--begin::Toolbar-->
 			<div class="d-flex align-items-center">
@@ -12,27 +10,6 @@
 				<button class="btn p-0 burger-icon burger-icon-left" id="kt_aside_mobile_toggle">
 					<span></span>
 				</button>
-				<!--end::Aside Mobile Toggle-->
-				<!--begin::Header Menu Mobile Toggle-->
-				<button class="btn p-0 burger-icon ml-4" id="kt_header_mobile_toggle">
-					<span></span>
-				</button>
-				<!--end::Header Menu Mobile Toggle-->
-				<!--begin::Topbar Mobile Toggle-->
-				<button class="btn btn-hover-text-primary p-0 ml-2" id="kt_header_mobile_topbar_toggle">
-					<span class="svg-icon svg-icon-xl">
-						<!--begin::Svg Icon | path:assets/media/svg/icons/General/User.svg-->
-						<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
-							<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-								<polygon points="0 0 24 0 24 24 0 24" />
-								<path d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" />
-								<path d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z" fill="#000000" fill-rule="nonzero" />
-							</g>
-						</svg>
-						<!--end::Svg Icon-->
-					</span>
-				</button>
-				<!--end::Topbar Mobile Toggle-->
 			</div>
 			<!--end::Toolbar-->
 		</div>
@@ -41,18 +18,17 @@
 			<!--begin::Page-->
 			<div class="d-flex flex-row flex-column-fluid page">
 				<!--begin::Aside-->
-				<div class="aside aside-left aside-fixed d-flex flex-column flex-row-auto" id="kt_aside">
+				<div class="aside aside-left aside-fixed d-flex flex-column flex-row-auto side_bar">
 					<!--begin::Brand-->
-					<div class="brand flex-column-auto" id="kt_brand">
+					<div class="brand flex-column-auto nav_brand" id="kt_brand">
 						<!--begin::Logo-->
-						<a href="index.html" class="brand-logo">
-							<img alt="Logo" src="assets/media/logos/logo-light.png" />
-						</a>
+						<img src="assets/images/unicor_5.png" height="50" alt="Uni-Cor Logo">
+						<h2 class="app_title" *ngIf="!collapsed">Uni-Cor</h2>
 						<!--end::Logo-->
 						<!--begin::Toggle-->
-						<button class="brand-toggle btn btn-sm px-0" id="kt_aside_toggle">
-							<span class="svg-icon svg-icon svg-icon-xl">
-								<!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Angle-double-left.svg-->
+						<button class="brand-toggle btn btn-sm px-0" id="kt_aside_toggle" (click)="collapseSidebar()">
+							<span class="svg-icon svg-icon">
+								
 								<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
 									<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
 										<polygon points="0 0 24 0 24 24 0 24" />
@@ -60,7 +36,7 @@
 										<path d="M10.7071009,15.7071068 C10.3165766,16.0976311 9.68341162,16.0976311 9.29288733,15.7071068 C8.90236304,15.3165825 8.90236304,14.6834175 9.29288733,14.2928932 L15.2928873,8.29289322 C15.6714663,7.91431428 16.2810527,7.90106866 16.6757187,8.26284586 L22.6757187,13.7628459 C23.0828377,14.1360383 23.1103407,14.7686056 22.7371482,15.1757246 C22.3639558,15.5828436 21.7313885,15.6103465 21.3242695,15.2371541 L16.0300699,10.3841378 L10.7071009,15.7071068 Z" fill="#000000" fill-rule="nonzero" opacity="0.3" transform="translate(15.999997, 11.999999) scale(-1, 1) rotate(-270.000000) translate(-15.999997, -11.999999)" />
 									</g>
 								</svg>
-								<!--end::Svg Icon-->
+								
 							</span>
 						</button>
 						<!--end::Toolbar-->
@@ -72,63 +48,68 @@
 						<div id="kt_aside_menu" class="aside-menu my-4" data-menu-vertical="1" data-menu-scroll="1" data-menu-dropdown-timeout="500">
 							<!--begin::Menu Nav-->
 							<ul class="menu-nav">
-								<li class="menu-item" aria-haspopup="true">
-									<a href="index.html" class="menu-link">
-										<i class="menu-icon flaticon-home"></i>
-										<span class="menu-text">Dashboard</span>
+								<li class="menu-item" aria-haspopup="true" data-container="body" data-toggle="tooltip" data-placement="right" title="{{ sidebarText.score }}">
+									<a routerLink="score-exam" routerLinkActive="active" class="menu-link side_bar_link">
+										<i class="menu-icon flaticon-edit-1"></i>
+										<span class="menu-text">{{ sidebarText.score }}</span>
 									</a>
 								</li>
-								<li class="menu-section">
+								<li class="menu-item" aria-haspopup="true" data-container="body" data-toggle="tooltip" data-placement="right" title="{{ sidebarText.exams }}">
+									<a routerLink="exams" routerLinkActive="active" class="menu-link side_bar_link">
+										<i class="menu-icon flaticon-layer"></i>
+										<span class="menu-text">{{ sidebarText.exams }}</span>
+									</a>
+								</li>
+								<li class="menu-item" aria-haspopup="true" data-container="body" data-toggle="tooltip" data-placement="right" title="{{ sidebarText.students }}">
+										<a routerLink="students" routerLinkActive="active" class="menu-link side_bar_link">
+										<i class="menu-icon flaticon2-user"></i>
+										<span class="menu-text">{{ sidebarText.students }}</span>
+									</a>
+								</li>
+								<li class="menu-item" aria-haspopup="true" data-container="body" data-toggle="tooltip" data-placement="right" title="{{ sidebarText.help }}">
+									<a routerLink="help" routerLinkActive="active" class="menu-link side_bar_link">
+										<i class="menu-icon flaticon-questions-circular-button"></i>
+										<span class="menu-text">{{ sidebarText.help }}</span>
+									</a>
+								</li>
+								<li class="menu-item" aria-haspopup="true" data-container="body" data-toggle="tooltip" data-placement="right" title="{{ sidebarText.settings }}">
+									<a routerLink="settings" routerLinkActive="active" class="menu-link side_bar_link">
+										<i class="menu-icon flaticon-settings"></i>
+										<span class="menu-text">{{ sidebarText.settings }}</span>
+									</a>
+								</li>
+								<!-- <li class="menu-section">
 									<h4 class="menu-text">Custom</h4>
 									<i class="menu-icon ki ki-bold-more-hor icon-md"></i>
-								</li>
-								<li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+								</li> -->
+								<!-- <li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
 									<a href="javascript:;" class="menu-link menu-toggle">
 										<i class="menu-icon flaticon-web"></i>
-										<span class="menu-text">Applications</span>
+										<span class="menu-text">Manage Exams</span>
 										<i class="menu-arrow"></i>
 									</a>
 									<div class="menu-submenu">
 										<i class="menu-arrow"></i>
 										<ul class="menu-subnav">
-											<li class="menu-item menu-item-parent" aria-haspopup="true">
-												<span class="menu-link">
-													<span class="menu-text">Applications</span>
-												</span>
+											<li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+												<a href="javascript:;" class="menu-link menu-toggle">
+													<i class="menu-bullet menu-bullet-dot">
+														<span></span>
+													</i>
+													<span class="menu-text">Create Exam</span>
+												</a>
 											</li>
 											<li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
 												<a href="javascript:;" class="menu-link menu-toggle">
-													<i class="menu-bullet menu-bullet-line">
+													<i class="menu-bullet menu-bullet-dot">
 														<span></span>
 													</i>
-													<span class="menu-text">Users</span>
-													<i class="menu-arrow"></i>
+													<span class="menu-text">Create Answer Sheet</span>
 												</a>
-												<div class="menu-submenu">
-													<i class="menu-arrow"></i>
-													<ul class="menu-subnav">
-														<li class="menu-item" aria-haspopup="true">
-															<a href="custom/apps/user/list-default.html" class="menu-link">
-																<i class="menu-bullet menu-bullet-dot">
-																	<span></span>
-																</i>
-																<span class="menu-text">List - Default</span>
-															</a>
-														</li>
-														<li class="menu-item" aria-haspopup="true">
-															<a href="custom/apps/user/list-datatable.html" class="menu-link">
-																<i class="menu-bullet menu-bullet-dot">
-																	<span></span>
-																</i>
-																<span class="menu-text">List - Datatable</span>
-															</a>
-														</li>
-													</ul>
-												</div>
 											</li>
 										</ul>
 									</div>
-								</li>
+								</li> -->
 							</ul>
 							<!--end::Menu Nav-->
 						</div>
@@ -138,17 +119,19 @@
 				</div>
 				<!--end::Aside-->
 				<!--begin::Wrapper-->
-				<div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
+				<div class="d-flex flex-column flex-row-fluid wrapper">
 					<!--begin::Header-->
-					<div id="kt_header" class="header header-fixed" style="height: 100%;">
+					<!-- <div id="kt_header" class="content base_content"> -->
 						<!--begin::Container-->
-						<div class="container-fluid d-flex align-items-stretch justify-content-between">
-                            
+						<!-- <div class="container-fluid d-flex align-items-stretch justify-content-between"> -->
+					<div class="container">
+						<div class="main_content">
                             <router-outlet></router-outlet>
-
 						</div>
-						<!--end::Container-->
 					</div>
+						<!-- </div> -->
+						<!--end::Container-->
+					<!-- </div> -->
 					<!--end::Header-->
 					<!--begin::Content
 					<div class="content d-flex flex-column flex-column-fluid" id="kt_content">

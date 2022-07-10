@@ -14,16 +14,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
-import { HomeModule } from './home/home.module';
-import { DetailModule } from './detail/detail.module';
+// Webcam
+import { WebcamModule } from 'ngx-webcam';
 
 import { AppComponent } from './app.component';
-import { SidebarComponent } from './common/sidebar/sidebar.component';
-import { HeaderComponent } from './common/header/header.component';
-import { ScoreExamComponent } from './score-exam/score-exam.component';
-import { ManageExamComponent } from './manage-exam/manage-exam.component';
-import { StudentsComponent } from './students/students.component';
 import { BaseLayoutComponent } from './common/base-layout/base-layout.component';
+import { ScoreExamComponent } from './pages/score-exam/score-exam.component';
+import { CapturedPhotosComponent } from './pages/score-exam/captured-photos/captured-photos.component';
+import { ExamsComponent } from './pages/exams/exams.component';
+import { StudentsComponent } from './pages/students/students.component';
+import { HelpComponent } from './pages/help/help.component';
+import { SettingsComponent } from './pages/settings/settings.component';
 
 // AoT requires an exported function for factories
 const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>  new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -31,12 +32,13 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>  new Transl
 @NgModule({
   declarations: [
     AppComponent,
-    SidebarComponent,
-    HeaderComponent,
+    BaseLayoutComponent,
     ScoreExamComponent,
-    ManageExamComponent,
+    CapturedPhotosComponent,
+    ExamsComponent,
     StudentsComponent,
-    BaseLayoutComponent
+    HelpComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,
@@ -44,9 +46,8 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>  new Transl
     HttpClientModule,
     CoreModule,
     SharedModule,
-    HomeModule,
-    DetailModule,
     AppRoutingModule,
+    WebcamModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
