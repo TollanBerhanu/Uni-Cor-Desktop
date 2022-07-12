@@ -5,17 +5,29 @@ $sidebar-hover-border-color: #7bd7e7;
 $sidebar-active-bg-color: #14141f;
 $sidebar-hover-bg-color: #181824;
 
+$header-size: 1%;
 $collapse_transition: 0.6s;
 
-div.base_content{
-    height: 100%;
-    position: relative;
-    top: -120px;   
+div.header_content{
+    background-color: #fff;
+    position: fixed;
+    right: 0px;
+    width: 83%;
+    text-align: right;
+    height: $header-size;
+    z-index: 10;
+    box-shadow: 0px 0px 5px 0px $sidebar-hover-border-color;
+    // border-bottom: 2px solid $sidebar-hover-border-color;
+}
+div.header_content_collapsed{
+    width: 94%;
+    transition: $collapse_transition;
 }
 div.main_content{
-    margin-top: 20px;
+    margin-top: 10px;
     position: absolute;
     right: 0px;
+    top: $header-size;
     width: 80%;
     transition: $collapse_transition;
 }

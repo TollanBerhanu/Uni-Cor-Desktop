@@ -1,0 +1,40 @@
+
+.main_content{
+    width: 96%;
+    // height: 600px;
+    background-color: transparent;
+}
+//Search form styles
+.search_form{
+    position: fixed;
+    top: 3%;
+    width: 78%;
+    z-index: 21;
+}
+//Table Styles
+.main_content_table{
+    margin-top: 6%;
+    padding: 5px 15px;
+    overflow: scroll;
+}
+.table_header{
+    position: fixed;
+    z-index: 20 !important;
+}
+.table_body{
+    text-align: center;
+}
+// Icon styles
+i.icon_link{
+    margin-right: 10px;
+    cursor: pointer;
+}
+i.edit_exam:hover{
+    color: rgb(38, 123, 252);
+}
+i.delete_exam:hover{
+    color: rgb(253, 32, 16);
+}
+i.generate_ans_sheet:hover{
+    color: rgb(51, 212, 30);
+}

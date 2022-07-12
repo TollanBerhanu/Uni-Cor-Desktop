@@ -25,6 +25,8 @@ import { ExamsComponent } from './pages/exams/exams.component';
 import { StudentsComponent } from './pages/students/students.component';
 import { HelpComponent } from './pages/help/help.component';
 import { SettingsComponent } from './pages/settings/settings.component';
+import { CreateExamComponent } from './pages/exams/create-exam/create-exam.component';
+import { TryoutComponent } from './pages/tryout/tryout.component';
 
 // AoT requires an exported function for factories
 const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>  new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -38,7 +40,9 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>  new Transl
     ExamsComponent,
     StudentsComponent,
     HelpComponent,
-    SettingsComponent
+    SettingsComponent,
+    CreateExamComponent,
+    TryoutComponent
   ],
   imports: [
     BrowserModule,
