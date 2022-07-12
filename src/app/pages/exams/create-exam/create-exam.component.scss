@@ -1,3 +1,23 @@
-.dropdown-item{
+div.dropdown-menu{
+    width: 200px;
+}
+a.dropdown-item{
     cursor: pointer;
+}
+a.dropdown-item:hover{
+    // background-color: #80a3fd;
+    font-weight: bold;
+}
+
+div.part_divider{
+    margin-top: 40px;
+}
+
+textarea.question_text{
+    overflow: scroll-y;
+    overflow-wrap: break-word;
+    resize: none;
+}
+textarea.true_false{
+    height: 50px;
 }
