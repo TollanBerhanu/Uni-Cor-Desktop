@@ -13,6 +13,10 @@ div.part_divider{
     margin-top: 40px;
 }
 
+div.question{
+    margin-top: 30px;
+}
+
 textarea.question_text{
     overflow: scroll-y;
     overflow-wrap: break-word;
@@ -20,4 +24,24 @@ textarea.question_text{
 }
 textarea.true_false{
     height: 50px;
+}
+div.add_section{
+    margin: 70px 0px;
+}
+
+.question_no{
+    border: 1px solid black;
+    cursor: pointer;
+}
+.question_no:hover{
+    visibility: hidden;
+}
+
+.question_cross{
+    border: 1px solid red;
+    position: absolute;
+    // visibility: hidden;
+}
+.question_cross:hover{
+    visibility: hidden;
 }

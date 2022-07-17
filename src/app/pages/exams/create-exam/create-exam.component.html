@@ -3,6 +3,10 @@
     <div class="container">
         <!--begin::Card-->
         <div class="card card-custom card-sticky" id="kt_page_sticky_card">
+            
+                <!--begin::Form-->
+                <form class="form" id="kt_form" (ngSubmit)="onSubmit(examForm)" #examForm="ngForm">
+
             <div class="card-header" style="z-index: 90; top: 54px; left: 15px; right: 15px;">
                 <div class="card-title">
                     <h3 class="card-label">Create New Exam
@@ -14,7 +18,7 @@
                     <a routerLink="/exams" class="btn btn-light-primary font-weight-bolder mr-2">
                     <i class="ki ki-long-arrow-back icon-sm"></i>Back</a>
                     <div class="btn-group">
-                        <button type="button" class="btn btn-primary font-weight-bolder">
+                        <button type="submit" class="btn btn-primary font-weight-bolder">
                         <i class="ki ki-check icon-sm"></i>Save Exam</button>
                         <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                         <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
@@ -53,18 +57,20 @@
 
 
                 <!--begin::Form-->
-                <form class="form" id="kt_form">
+                <!-- <form class="form" id="kt_form" (ngSubmit)="onSubmit()"> -->
                     <div class="form-group row">
                         <div class="col-lg-6">
                             <label>Exam Name:</label>
-                            <input type="text" class="form-control" placeholder="Enter exam name">
+                            <input type="text" class="form-control" placeholder="Enter exam name"
+                            name="examname" ngModel>
                             <!-- <span class="form-text text-muted">Please enter an exam name</span> -->
                         </div>
                         
                         <div class="col-lg-6">
                             <div class="form-group">
                                 <label for="exampleSelect1">Exam Type</label>
-                                <select class="form-control" id="exampleSelect1">
+                                <select class="form-control" id="exampleSelect1"
+                                name="examtype" ngModel>
                                     <option value=""></option>
                                     <option value="mid">Mid Exam</option>
                                     <option value="final">Final Exam</option>
@@ -79,23 +85,9 @@
                                 <h4 class="text-dark font-weight-bold mb-10">Exam Content</h4>
                         </div>
                     </div> -->
-                    <div class="form-group row">
-                        <div class="dropdown">
-                            <button class="btn btn-primary font-weight-bold font-size-h6 px-10 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Add Exam Part
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item">True or False</a>
-                                <a class="dropdown-item">Choice</a>
-                                <a class="dropdown-item">Blank Space</a>
-                                <a class="dropdown-item">Definition</a>
-                                <a class="dropdown-item">Short Answer</a>
-                            </div>
-                        </div>
-                    </div>
 
                     <!-- Begin: Part Title -->
-                    <div class="row">
+                    <div *ngIf="tf"  class="row">
                         <div class="col-xl-1"></div>
                         <div class="col-xl-8">
                                 <h4 class="text-dark font-weight-bold mb-10">Part I: True or False</h4>
@@ -104,33 +96,39 @@
                     <!-- End: Part Title -->
 
                     <!-- Begin: True or False -->
-                    <div class="row">
+                    <div *ngIf="tf" class="row">
                         <div class="col-xl-10">
-                            <div class="row">
+                            <div *ngFor="let qn of tfqn">
+                            <div class="row question">
                                 <div class="col-sm-1">
-                                    <label>Qn 1.</label>
+                                    <span class="question_no"><label>Qn {{qn+1}}.</label></span>
+                                    <span class="question_cross"><i class="flaticon2-cross"></i></span>
                                 </div>
                                 <div class="col-lg-9">
-                                    <textarea class="form-control form-control-solid question_text true_false" id="kt_autosize_1" rows="2"></textarea>
+                                    <textarea class="form-control form-control-solid question_text true_false" id="kt_autosize_1" rows="2"
+                                    name="tf_qn_ {{qn+1}}" ngModel></textarea>
                                 </div>
                                 <div class="col-sm-1">
                                     <label>Answer:</label>
                                 </div>
                                 <div class="col-sm-1">
                                     <label class="radio radio-solid">
-                                    <input type="radio" name="example_2" value="true">True
+                                    <input type="radio" value="true"
+                                    name="tf_ans_{{qn+1}}" ngModel>True
                                     <span></span></label>
                                     <label class="radio radio-solid">
-                                    <input type="radio" name="example_2" value="false">False
+                                    <input type="radio" value="false"
+                                    name="tf_ans_{{qn+1}}" ngModel>False
                                     <span></span></label>
                                 </div>
                                 <!-- <span class="form-text text-muted">Please select user group</span> -->
+                            </div>
                             </div>
                             <br>
                             <div class="row">
                                 <div class="col-sm-1"></div>
                                 <div class="col-sm-5">
-                                    <a class="btn btn-light-success mr-3">
+                                    <a class="btn btn-light-success mr-3" (click)="addQuestion('tf')">
                                         <i class="flaticon2-plus"></i> Add Question
                                     </a>
                                 </div>
@@ -142,32 +140,35 @@
                     <!-- <div class="part_divider"></div> -->
 
                     <!-- Begin: Part Title -->
-                    <div class="row part_divider">
+                    <div *ngIf="choice" class="row part_divider">
                         <div class="col-xl-1"></div>
                         <div class="col-xl-8">
-                                <h4 class="text-dark font-weight-bold mb-10">Part II: Choice</h4>
+                            <h4 class="text-dark font-weight-bold mb-10">Part II: Choice</h4>
                         </div>
                     </div>
                     <!-- End: Part Title -->
 
                     <!-- Begin: Choice -->
-                    <div class="row">
+                    <div *ngIf="choice" class="row">
                         <div class="col-xl-10">
-                            <div class="row">
+                            <div *ngFor="let qn of choiceqn">
+                            <div class="row question">
                                 <!-- <div class="col-sm-1"></div> -->
                                 <div class="col-sm-1">
-                                    <label>Qn 1.</label>
+                                    <label>Qn {{qn+1}}.</label>
                                 </div>
                                 <div class="col-lg-9">
-                                    <textarea class="form-control form-control-solid question_text true_false" id="kt_autosize_1" rows="2"></textarea>
+                                    <textarea class="form-control form-control-solid question_text true_false" id="kt_autosize_1" rows="2"
+                                    name="choice_qn_{{qn+1}}" ngModel></textarea>
                                 </div>
                                 <div class="col-sm-1">
                                     <label>Answer:</label>
                                 </div>
                                 <div class="col-sm-1">
-                                    <select class="form-control form-control-solid" style="width: 70px;">
-                                        <option></option>
-                                        <option>A</option>
+                                    <select class="form-control form-control-solid" style="width: 70px;"
+                                    name="ch_ans_{{qn+1}}" ngModel>
+                                        <option value=""></option>
+                                        <option value="A">A</option>
                                     </select>
                                 </div>
                             </div>
@@ -178,15 +179,22 @@
                                     <label>A</label>
                                 </div>
                                 <div class="col-lg-8">
-                                    <input class="form-control form-control-solid" type="text">
+                                    <input class="form-control form-control-solid" type="text"
+                                    name="ch_qn_{{qn+1}}_opt_1" ngModel>
+                                </div>
+                                <div class="col-lg-2">
+                                    <a class="btn btn-icon btn-light-primary btn-circle btn-xs mr-1" (click)="addChoiceOption(qn+1)">
+                                        <i class="flaticon2-plus"></i>
+                                    </a>
                                 </div>
                                 <!-- <span class="form-text text-muted">Please select user group</span> -->
+                            </div>
                             </div>
                             <br>
                             <div class="row">
                                 <div class="col-sm-1"></div>
                                 <div class="col-sm-5">
-                                    <a class="btn btn-light-success mr-3">
+                                    <a class="btn btn-light-success mr-3" (click)="addQuestion('choice')">
                                         <i class="flaticon2-plus"></i> Add Question
                                     </a>
                                 </div>
@@ -196,24 +204,26 @@
                     <!-- End: Choice -->
 
                     <!-- Begin: Part Title -->
-                    <div class="row part_divider">
+                    <div *ngIf="fill" class="row part_divider">
                         <div class="col-xl-1"></div>
                         <div class="col-xl-8">
-                                <h4 class="text-dark font-weight-bold mb-10">Part III: Fill in the blank spaces</h4>
+                            <h4 class="text-dark font-weight-bold mb-10">Part III: Fill in the blank spaces</h4>
                         </div>
                     </div>
                     <!-- End: Part Title -->
 
                     <!-- Begin: Blank Space -->
-                    <div class="row">
+                    <div *ngIf="fill" class="row">
                         <div class="col-xl-10">
-                            <div class="row">
+                            <div *ngFor="let qn of  fillqn">
+                            <div class="row question">
                                 <!-- <div class="col-sm-1"></div> -->
                                 <div class="col-sm-1">
-                                    <label>Qn 1.</label>
+                                    <label>Qn {{qn+1}}.</label>
                                 </div>
                                 <div class="col-lg-10">
-                                    <textarea class="form-control form-control-solid question_text true_false" id="kt_autosize_1" rows="2"></textarea>
+                                    <textarea class="form-control form-control-solid question_text true_false" id="kt_autosize_1" rows="2"
+                                    name="fill_qn_{{qn+1}}" ngModel></textarea>
                                 </div>
                             </div>
                             <br>
@@ -223,15 +233,17 @@
                                     <label>Answer:</label>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input class="form-control form-control-solid" type="text">
+                                    <input class="form-control form-control-solid" type="text"
+                                    name="fill_ans_{{qn+1}}" ngModel>
                                 </div>
                                 <!-- <span class="form-text text-muted">Please select user group</span> -->
+                            </div>
                             </div>
                             <br>
                             <div class="row">
                                 <div class="col-sm-1"></div>
                                 <div class="col-sm-5">
-                                    <a class="btn btn-light-success mr-3">
+                                    <a class="btn btn-light-success mr-3" (click)="addQuestion('fill')">
                                         <i class="flaticon2-plus"></i> Add Question
                                     </a>
                                 </div>
@@ -241,24 +253,26 @@
                     <!-- End: Blank Space -->
 
                     <!-- Begin: Part Title -->
-                    <div class="row part_divider">
+                    <div *ngIf="define" class="row part_divider">
                         <div class="col-xl-1"></div>
                         <div class="col-xl-8">
-                                <h4 class="text-dark font-weight-bold mb-10">Part IV: Define the following terms</h4>
+                            <h4 class="text-dark font-weight-bold mb-10">Part IV: Define the following terms</h4>
                         </div>
                     </div>
                     <!-- End: Part Title -->
 
                     <!-- Begin: Define -->
-                    <div class="row">
+                    <div *ngIf="define" class="row">
                         <div class="col-xl-10">
-                            <div class="row">
+                            <div *ngFor="let qn of defineqn">
+                            <div class="row question">
                                 <!-- <div class="col-sm-1"></div> -->
                                 <div class="col-sm-1">
-                                    <label>Qn 1.</label>
+                                    <label>Qn {{qn+1}}.</label>
                                 </div>
                                 <div class="col-lg-6">
-                                    <input class="form-control form-control-solid" type="text">
+                                    <input class="form-control form-control-solid" type="text"
+                                    name="define_qn_{{qn+1}}" ngModel>
                                 </div>
                             </div>
                             <br>
@@ -268,15 +282,17 @@
                                     <label>Answer:</label>
                                 </div>
                                 <div class="col-lg-10">
-                                    <textarea class="form-control form-control-solid question_text true_false" id="kt_autosize_1" rows="2"></textarea>
+                                    <textarea class="form-control form-control-solid question_text true_false" id="kt_autosize_1" rows="2"
+                                    name="define_ans_{{qn+1}}" ngModel></textarea>
                                 </div>
                                 <!-- <span class="form-text text-muted">Please select user group</span> -->
+                            </div>
                             </div>
                             <br>
                             <div class="row">
                                 <div class="col-sm-1"></div>
                                 <div class="col-sm-5">
-                                    <a class="btn btn-light-success mr-3">
+                                    <a class="btn btn-light-success mr-3" (click)="addQuestion('define')">
                                         <i class="flaticon2-plus"></i> Add Question
                                     </a>
                                 </div>
@@ -286,24 +302,26 @@
                     <!-- End: Define -->
 
                      <!-- Begin: Part Title -->
-                     <div class="row part_divider">
+                     <div *ngIf="shortans" class="row part_divider">
                         <div class="col-xl-1"></div>
                         <div class="col-xl-8">
-                                <h4 class="text-dark font-weight-bold mb-10">Part V: Short Answer</h4>
+                            <h4 class="text-dark font-weight-bold mb-10">Part V: Short Answer</h4>
                         </div>
                     </div>
                     <!-- End: Part Title -->
 
                     <!-- Begin: Short Answer -->
-                    <div class="row">
+                    <div *ngIf="shortans" class="row">
                         <div class="col-xl-10">
-                            <div class="row">
+                            <div *ngFor="let qn of shortansqn">
+                            <div class="row question">
                                 <!-- <div class="col-sm-1"></div> -->
                                 <div class="col-sm-1">
-                                    <label>Qn 1.</label>
+                                    <label>Qn {{qn+1}}.</label>
                                 </div>
                                 <div class="col-lg-6">
-                                    <textarea class="form-control form-control-solid question_text true_false" id="kt_autosize_1" rows="2"></textarea>
+                                    <textarea class="form-control form-control-solid question_text true_false" id="kt_autosize_1" rows="2"
+                                    name="shortans_qn_{{qn+1}}"></textarea>
                                 </div>
                             </div>
                             <br>
@@ -313,13 +331,14 @@
                                     <label>Answer:</label>
                                 </div>
                                 <div class="col-lg-10">
-                                    <textarea class="form-control form-control-solid question_text true_false" id="kt_autosize_1" rows="2"></textarea>
+                                    <textarea class="form-control form-control-solid question_text true_false" id="kt_autosize_1" rows="2"
+                                    name="shortans_ans_{{qn+1}}"></textarea>
                                 </div>
                                 <!-- <span class="form-text text-muted">Please select user group</span> -->
                             </div>
+                            </div>
                             <br>
-                            <div class="row">
-                                <!-- <div class="col-sm-1"></div> -->
+                            <!-- <div class="row">
                                 <div class="col-sm-1">
                                     <label>Accuracy:</label>
                                 </div>
@@ -335,13 +354,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!-- <span class="form-text text-muted">Please select user group</span> -->
-                            </div>
+                            </div> -->
                             <br>
                             <div class="row">
                                 <div class="col-sm-1"></div>
                                 <div class="col-sm-5">
-                                    <a class="btn btn-light-success mr-3">
+                                    <a class="btn btn-light-success mr-3" (click)="addQuestion('shortans')">
                                         <i class="flaticon2-plus"></i> Add Question
                                     </a>
                                 </div>
@@ -350,15 +368,32 @@
                     </div>
                     <!-- End: Short Answer -->
 
+                    <!-- Begin: Add Exam Section -->
+                    <div class="form-group row add_section">
+                        <div class="dropdown">
+                            <button class="btn btn-primary font-weight-bold font-size-h6 px-10 dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Add Exam Section
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a *ngIf="!tf" class="dropdown-item" (click)="addSection('tf')">True or False</a>
+                                <a *ngIf="!choice" class="dropdown-item" (click)="addSection('choice')">Choice</a>
+                                <a *ngIf="!fill" class="dropdown-item" (click)="addSection('fill')">Blank Space</a>
+                                <a *ngIf="!define" class="dropdown-item" (click)="addSection('define')">Definition</a>
+                                <a *ngIf="!shortans" class="dropdown-item" (click)="addSection('shortans')">Short Answer</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End: Add Exam Section -->
+
                     <!-- <div class="checkbox-single">
                         <label class="checkbox">
                         <input type="checkbox"> Sample Checkbox
                         <span></span></label>
                     </div> -->
                     
-                </form>
-                <!--end::Form-->
             </div>
+            </form>
+            <!--end::Form-->
         </div>
         <!--end::Card-->
     </div>
