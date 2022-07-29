@@ -5,7 +5,7 @@
         <div class="card card-custom card-sticky" id="kt_page_sticky_card">
             
                 <!--begin::Form-->
-                <form class="form" id="kt_form" (ngSubmit)="onSubmit(examForm)" #examForm="ngForm">
+                <!-- <form class="form" id="kt_form" (ngSubmit)="onSubmit(examForm)" #examForm="ngForm"> -->
 
             <div class="card-header" style="z-index: 90; top: 54px; left: 15px; right: 15px;">
                 <div class="card-title">
@@ -18,13 +18,13 @@
                     <a routerLink="/exams" class="btn btn-light-primary font-weight-bolder mr-2">
                     <i class="ki ki-long-arrow-back icon-sm"></i>Back</a>
                     <div class="btn-group">
-                        <button type="submit" class="btn btn-primary font-weight-bolder">
+                        <button type="button" (click)="sendToElectron()" class="btn btn-primary font-weight-bolder">
                         <i class="ki ki-check icon-sm"></i>Save Exam</button>
                         <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                         <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
                             <ul class="nav nav-hover flex-column">
                                 <li class="nav-item">
-                                    <a href="#" class="nav-link">
+                                    <a href="#" class="nav-link" (click)="sendToElectron()">
                                         <i class="nav-icon flaticon2-reload"></i>
                                         <span class="nav-text">Save &amp; continue</span>
                                     </a>
@@ -62,7 +62,7 @@
                         <div class="col-lg-6">
                             <label>Exam Name:</label>
                             <input type="text" class="form-control" placeholder="Enter exam name"
-                            name="examname" ngModel>
+                            name="examname" [(ngModel)]="examName">
                             <!-- <span class="form-text text-muted">Please enter an exam name</span> -->
                         </div>
                         
@@ -70,7 +70,7 @@
                             <div class="form-group">
                                 <label for="exampleSelect1">Exam Type</label>
                                 <select class="form-control" id="exampleSelect1"
-                                name="examtype" ngModel>
+                                name="examtype" [(ngModel)]="examType">
                                     <option value=""></option>
                                     <option value="mid">Mid Exam</option>
                                     <option value="final">Final Exam</option>
@@ -89,8 +89,8 @@
                     <!-- Begin: Part Title -->
                     <div *ngIf="tf"  class="row">
                         <div class="col-xl-1"></div>
-                        <div class="col-xl-8">
-                                <h4 class="text-dark font-weight-bold mb-10">Part I: True or False</h4>
+                        <div class="col-xl-8" (dblclick)="removeSection('tf')">
+                                <h4 class="text-dark font-weight-bold mb-10 section_header">Part {{ resolveSection('tf') }}: True or False</h4>
                         </div>
                     </div>
                     <!-- End: Part Title -->
@@ -98,15 +98,15 @@
                     <!-- Begin: True or False -->
                     <div *ngIf="tf" class="row">
                         <div class="col-xl-10">
-                            <div *ngFor="let qn of tfqn">
+                            <div *ngFor="let q of tfqn; let qn = index;">
                             <div class="row question">
                                 <div class="col-sm-1">
-                                    <span class="question_no"><label>Qn {{qn+1}}.</label></span>
-                                    <span class="question_cross"><i class="flaticon2-cross"></i></span>
+                                    <span class="question_no" (dblclick)="removeQuestion('tf', qn)"><label>Qn {{qn+1}}.</label></span>
+                                    <!-- <span class="question_cross"><i class="flaticon2-cross"></i></span> -->
                                 </div>
                                 <div class="col-lg-9">
                                     <textarea class="form-control form-control-solid question_text true_false" id="kt_autosize_1" rows="2"
-                                    name="tf_qn_ {{qn+1}}" ngModel></textarea>
+                                    name="tf_qn_{{qn+1}}" [(ngModel)]="tfQn[qn]"></textarea>
                                 </div>
                                 <div class="col-sm-1">
                                     <label>Answer:</label>
@@ -114,11 +114,11 @@
                                 <div class="col-sm-1">
                                     <label class="radio radio-solid">
                                     <input type="radio" value="true"
-                                    name="tf_ans_{{qn+1}}" ngModel>True
+                                    name="tf_ans_{{qn+1}}" [(ngModel)]="tfAns[qn]">True
                                     <span></span></label>
                                     <label class="radio radio-solid">
                                     <input type="radio" value="false"
-                                    name="tf_ans_{{qn+1}}" ngModel>False
+                                    name="tf_ans_{{qn+1}}" [(ngModel)]="tfAns[qn]">False
                                     <span></span></label>
                                 </div>
                                 <!-- <span class="form-text text-muted">Please select user group</span> -->
@@ -142,8 +142,8 @@
                     <!-- Begin: Part Title -->
                     <div *ngIf="choice" class="row part_divider">
                         <div class="col-xl-1"></div>
-                        <div class="col-xl-8">
-                            <h4 class="text-dark font-weight-bold mb-10">Part II: Choice</h4>
+                        <div class="col-xl-8" (dblclick)="removeSection('choice')">
+                                <h4 class="text-dark font-weight-bold mb-10 section_header">Part {{ resolveSection('choice') }}: Choice</h4>
                         </div>
                     </div>
                     <!-- End: Part Title -->
@@ -151,39 +151,39 @@
                     <!-- Begin: Choice -->
                     <div *ngIf="choice" class="row">
                         <div class="col-xl-10">
-                            <div *ngFor="let qn of choiceqn">
+                            <div *ngFor="let q of choiceqn; let qn = index">
                             <div class="row question">
                                 <!-- <div class="col-sm-1"></div> -->
                                 <div class="col-sm-1">
-                                    <label>Qn {{qn+1}}.</label>
+                                    <label class="question_no" (dblclick)="removeQuestion('choice', qn)">Qn {{qn+1}}.</label>
                                 </div>
                                 <div class="col-lg-9">
                                     <textarea class="form-control form-control-solid question_text true_false" id="kt_autosize_1" rows="2"
-                                    name="choice_qn_{{qn+1}}" ngModel></textarea>
+                                    name="choice_qn_{{qn+1}}" [(ngModel)]="choiceQn[qn]"></textarea>
                                 </div>
                                 <div class="col-sm-1">
                                     <label>Answer:</label>
                                 </div>
                                 <div class="col-sm-1">
                                     <select class="form-control form-control-solid" style="width: 70px;"
-                                    name="ch_ans_{{qn+1}}" ngModel>
+                                    name="choice_ans_{{qn+1}}" [(ngModel)]="choiceAns[qn]">
                                         <option value=""></option>
-                                        <option value="A">A</option>
+                                        <option *ngFor="let c of choiceopt[qn]; let ch = index" value="{{ toChoiceLabel(ch) }}">{{ toChoiceLabel(ch) }}</option>
                                     </select>
                                 </div>
                             </div>
                             <br>
-                            <div class="row">
+                            <div *ngFor="let c of choiceopt[qn]; let ch = index" class="row">
                                 <div class="col-sm-1"></div>
                                 <div class="col-xs-1">
-                                    <label>A</label>
+                                    <label (dblclick)="removeChoiceOption(ch, qn)" class="choice_label">{{ toChoiceLabel(ch) }}</label>
                                 </div>
                                 <div class="col-lg-8">
                                     <input class="form-control form-control-solid" type="text"
-                                    name="ch_qn_{{qn+1}}_opt_1" ngModel>
+                                    name="choice_qn_{{qn+1}}_opt_1" [(ngModel)]="choiceOpt[qn][ch]">
                                 </div>
-                                <div class="col-lg-2">
-                                    <a class="btn btn-icon btn-light-primary btn-circle btn-xs mr-1" (click)="addChoiceOption(qn+1)">
+                                <div *ngIf="ch===choiceopt[qn].length-1" class="col-lg-2">
+                                    <a class="btn btn-icon btn-light-primary btn-circle btn-xs mr-1" (click)="addChoiceOption(ch, qn)">
                                         <i class="flaticon2-plus"></i>
                                     </a>
                                 </div>
@@ -206,8 +206,8 @@
                     <!-- Begin: Part Title -->
                     <div *ngIf="fill" class="row part_divider">
                         <div class="col-xl-1"></div>
-                        <div class="col-xl-8">
-                            <h4 class="text-dark font-weight-bold mb-10">Part III: Fill in the blank spaces</h4>
+                        <div class="col-xl-8" (dblclick)="removeSection('fill')">
+                                <h4 class="text-dark font-weight-bold mb-10 section_header">Part {{ resolveSection('fill') }}: Fill in the blank spaces</h4>
                         </div>
                     </div>
                     <!-- End: Part Title -->
@@ -215,15 +215,15 @@
                     <!-- Begin: Blank Space -->
                     <div *ngIf="fill" class="row">
                         <div class="col-xl-10">
-                            <div *ngFor="let qn of  fillqn">
+                            <div *ngFor="let q of fillqn; let qn = index">
                             <div class="row question">
                                 <!-- <div class="col-sm-1"></div> -->
                                 <div class="col-sm-1">
-                                    <label>Qn {{qn+1}}.</label>
+                                    <label class="question_no" (dblclick)="removeQuestion('fill', qn)">Qn {{qn+1}}.</label>
                                 </div>
                                 <div class="col-lg-10">
                                     <textarea class="form-control form-control-solid question_text true_false" id="kt_autosize_1" rows="2"
-                                    name="fill_qn_{{qn+1}}" ngModel></textarea>
+                                    name="fill_qn_{{qn+1}}" [(ngModel)]="fillQn[qn]"></textarea>
                                 </div>
                             </div>
                             <br>
@@ -234,7 +234,7 @@
                                 </div>
                                 <div class="col-lg-6">
                                     <input class="form-control form-control-solid" type="text"
-                                    name="fill_ans_{{qn+1}}" ngModel>
+                                    name="fill_ans_{{qn+1}}" [(ngModel)]="fillAns[qn]">
                                 </div>
                                 <!-- <span class="form-text text-muted">Please select user group</span> -->
                             </div>
@@ -255,8 +255,8 @@
                     <!-- Begin: Part Title -->
                     <div *ngIf="define" class="row part_divider">
                         <div class="col-xl-1"></div>
-                        <div class="col-xl-8">
-                            <h4 class="text-dark font-weight-bold mb-10">Part IV: Define the following terms</h4>
+                        <div class="col-xl-8" (dblclick)="removeSection('define')">
+                                <h4 class="text-dark font-weight-bold mb-10 section_header">Part {{ resolveSection('define') }}: Define the following terms</h4>
                         </div>
                     </div>
                     <!-- End: Part Title -->
@@ -264,15 +264,15 @@
                     <!-- Begin: Define -->
                     <div *ngIf="define" class="row">
                         <div class="col-xl-10">
-                            <div *ngFor="let qn of defineqn">
+                            <div *ngFor="let q of defineqn; let qn = index">
                             <div class="row question">
                                 <!-- <div class="col-sm-1"></div> -->
                                 <div class="col-sm-1">
-                                    <label>Qn {{qn+1}}.</label>
+                                    <label class="question_no" (dblclick)="removeQuestion('define', qn)">Qn {{qn+1}}.</label>
                                 </div>
                                 <div class="col-lg-6">
                                     <input class="form-control form-control-solid" type="text"
-                                    name="define_qn_{{qn+1}}" ngModel>
+                                    name="define_qn_{{qn+1}}" [(ngModel)]="defineQn[qn]">
                                 </div>
                             </div>
                             <br>
@@ -283,7 +283,7 @@
                                 </div>
                                 <div class="col-lg-10">
                                     <textarea class="form-control form-control-solid question_text true_false" id="kt_autosize_1" rows="2"
-                                    name="define_ans_{{qn+1}}" ngModel></textarea>
+                                    name="define_ans_{{qn+1}}" [(ngModel)]="defineAns[qn]"></textarea>
                                 </div>
                                 <!-- <span class="form-text text-muted">Please select user group</span> -->
                             </div>
@@ -304,8 +304,8 @@
                      <!-- Begin: Part Title -->
                      <div *ngIf="shortans" class="row part_divider">
                         <div class="col-xl-1"></div>
-                        <div class="col-xl-8">
-                            <h4 class="text-dark font-weight-bold mb-10">Part V: Short Answer</h4>
+                        <div class="col-xl-8" (dblclick)="removeSection('shortans')">
+                                <h4 class="text-dark font-weight-bold mb-10 section_header">Part {{ resolveSection('shortans') }}: Short Answer</h4>
                         </div>
                     </div>
                     <!-- End: Part Title -->
@@ -313,15 +313,15 @@
                     <!-- Begin: Short Answer -->
                     <div *ngIf="shortans" class="row">
                         <div class="col-xl-10">
-                            <div *ngFor="let qn of shortansqn">
+                            <div *ngFor="let q of shortansqn; let qn = index">
                             <div class="row question">
                                 <!-- <div class="col-sm-1"></div> -->
                                 <div class="col-sm-1">
-                                    <label>Qn {{qn+1}}.</label>
+                                    <label class="question_no" (dblclick)="removeQuestion('shortans', qn)">Qn {{qn+1}}.</label>
                                 </div>
                                 <div class="col-lg-6">
                                     <textarea class="form-control form-control-solid question_text true_false" id="kt_autosize_1" rows="2"
-                                    name="shortans_qn_{{qn+1}}"></textarea>
+                                    name="shortans_qn_{{qn+1}}" [(ngModel)]="shortansQn[qn]"></textarea>
                                 </div>
                             </div>
                             <br>
@@ -332,7 +332,7 @@
                                 </div>
                                 <div class="col-lg-10">
                                     <textarea class="form-control form-control-solid question_text true_false" id="kt_autosize_1" rows="2"
-                                    name="shortans_ans_{{qn+1}}"></textarea>
+                                    name="shortans_ans_{{qn+1}}" [(ngModel)]="shortansAns[qn]"></textarea>
                                 </div>
                                 <!-- <span class="form-text text-muted">Please select user group</span> -->
                             </div>
@@ -355,7 +355,6 @@
                                     </div>
                                 </div>
                             </div> -->
-                            <br>
                             <div class="row">
                                 <div class="col-sm-1"></div>
                                 <div class="col-sm-5">
@@ -392,7 +391,7 @@
                     </div> -->
                     
             </div>
-            </form>
+            <!-- </form> -->
             <!--end::Form-->
         </div>
         <!--end::Card-->

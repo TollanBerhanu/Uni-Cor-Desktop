@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
 import * as $ from 'jquery';
+import { ElectronService } from '../../core/services/electron/electron.service';
 
 @Component({
   selector: 'app-exams',
@@ -20,12 +21,17 @@ export class ExamsComponent implements OnInit, AfterViewInit {
     description: 'Description'
   };
 
+  exams = [];
+
   observer: MutationObserver;
 
-  constructor(private elRef: ElementRef){}
+  constructor(private elRef: ElementRef, private electron: ElectronService){}
 
   ngOnInit(){
     $.getScript('/assets/js/exams.js'); //Add path to your custom js file
+
+    this.exams = this.electron.getAllExams();
+    console.log(this.electron.getAllExams());
   }
 
 

@@ -1,4 +1,4 @@
-import { app, BrowserWindow, screen } from 'electron';
+import { app, BrowserWindow, screen, ipcMain } from 'electron';
 import * as path from 'path';
 import * as fs from 'fs';
 import * as url from 'url';
@@ -22,8 +22,17 @@ function createWindow(): BrowserWindow {
       nodeIntegration: true,
       allowRunningInsecureContent: (serve) ? true : false,
       contextIsolation: false,  // false if you want to run e2e test with Spectron
+      // preload: path.join(__dirname, 'preload.js')
     },
   });
+
+  ipcMain.on('msg', (event, data) => {
+    // const webContents = event.sender
+    // const win = BrowserWindow.fromWebContents(webContents)
+    // win.setTitle(title)
+    console.log(data);
+    event.reply('reply', 'From electron main process');
+  })
 
   if (serve) {
     const debug = require('electron-debug');

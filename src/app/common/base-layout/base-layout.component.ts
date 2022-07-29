@@ -14,7 +14,7 @@ export class BaseLayoutComponent implements OnInit {
   showText = true;
 
   sidebarText = {
-    score: 'Score Exams',
+    score: 'Score Exam',
     exams: 'My Exams',
     students: 'My Students',
     help: 'Help',

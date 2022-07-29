@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { ipcRenderer, webFrame } from 'electron';
 import * as childProcess from 'child_process';
 import * as fs from 'fs';
+import mongoose from 'mongoose';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +15,9 @@ export class ElectronService {
   webFrame: typeof webFrame;
   childProcess: typeof childProcess;
   fs: typeof fs;
+  mongoose: typeof mongoose;
+
+  exam;
 
   constructor() {
     // Conditional imports
@@ -23,6 +27,16 @@ export class ElectronService {
 
       this.childProcess = window.require('child_process');
       this.fs = window.require('fs');
+      this.mongoose = window.require('mongoose');
+
+      //Connect to MongoDB
+      this.mongoose.connect('mongodb://localhost:27017/unicor');
+      //Create 'Exam' model
+      this.exam = this.mongoose.model('Exams', new this.mongoose.Schema({
+        examname: String,
+        examtype: String,
+        exam: this.mongoose.Schema.Types.Mixed
+       }));
 
       // Notes :
       // * A NodeJS's dependency imported with 'window.require' MUST BE present in `dependencies` of both `app/package.json`
@@ -40,5 +54,25 @@ export class ElectronService {
 
   get isElectron(): boolean {
     return !!(window && window.process && window.process.type);
+  }
+
+  saveExam(examName, examType, examContent){
+    console.log(examContent);
+    this.exam.create({
+      examname: examName,
+      examtype: examType,
+      exam: examContent
+    });
+    // this.exam.findOne(function(error, result) {
+    //   console.log(result);
+    // });
+  }
+
+  getAllExams(): any{
+    let exams = [];
+    this.exam.find((err, result) => {
+      exams = result;
+    });
+    return exams;
   }
 }

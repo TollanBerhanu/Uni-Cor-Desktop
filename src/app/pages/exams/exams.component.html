@@ -99,12 +99,12 @@
        </tr>
    </thead>
    <tbody class="table_body">
-       <tr>
+       <tr *ngFor="let exam of exams; let i = index">
            <td style="width: 20px !important;">1</td>
-           <td>1</td>
-           <td>1</td>
-           <td>2</td>
-           <td>1</td>
+           <td>{{ i }}</td>
+           <td>{{ exam.examname }}</td>
+           <td>ExId1</td>
+           <td>{{ exam.examtype }}</td>
            <td>1</td>
            <td>1</td>
            <td>1</td>

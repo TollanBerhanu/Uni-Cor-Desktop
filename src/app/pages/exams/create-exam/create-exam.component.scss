@@ -9,14 +9,17 @@ a.dropdown-item:hover{
     font-weight: bold;
 }
 
+// Section header
+h4.section_header:hover{
+    cursor: pointer;
+    color: red!important;
+}
 div.part_divider{
     margin-top: 40px;
 }
-
 div.question{
     margin-top: 30px;
 }
-
 textarea.question_text{
     overflow: scroll-y;
     overflow-wrap: break-word;
@@ -29,19 +32,21 @@ div.add_section{
     margin: 70px 0px;
 }
 
-.question_no{
-    border: 1px solid black;
-    cursor: pointer;
-}
+//Question
 .question_no:hover{
-    visibility: hidden;
+    cursor: pointer;
+    color: red;
 }
-
 .question_cross{
     border: 1px solid red;
     position: absolute;
-    // visibility: hidden;
+    visibility: hidden;
 }
 .question_cross:hover{
     visibility: hidden;
+}
+.choice_label{ margin-bottom: 25px; }
+.choice_label:hover{
+    cursor: pointer;
+    color: red;
 }
