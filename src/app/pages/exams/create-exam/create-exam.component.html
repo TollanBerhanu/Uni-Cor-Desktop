@@ -182,7 +182,7 @@
                                     <input class="form-control form-control-solid" type="text"
                                     name="choice_qn_{{qn+1}}_opt_1" [(ngModel)]="choiceOpt[qn][ch]">
                                 </div>
-                                <div *ngIf="ch===choiceopt[qn].length-1" class="col-lg-2">
+                                <div *ngIf="ch===(choiceopt[qn].length-1)" class="col-lg-2">
                                     <a class="btn btn-icon btn-light-primary btn-circle btn-xs mr-1" (click)="addChoiceOption(ch, qn)">
                                         <i class="flaticon2-plus"></i>
                                     </a>

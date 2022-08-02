@@ -16,7 +16,7 @@ export class CreateExamComponent implements OnInit {
   tfqn: number[] = [];
   choice = false;
   choiceqn: number[] = [];
-  choiceopt = [[1]];
+  choiceopt = [[0]];
   choicelbl = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
   fill = false;
   fillqn: number[] = [];
@@ -82,7 +82,11 @@ export class CreateExamComponent implements OnInit {
   addQuestion(question: string){
     switch(question){
       case 'tf': this.tfqn.push(this.tfqn.length); break;
-      case 'choice': this.choiceqn.push(this.choiceqn.length); this.choiceopt.push([1]); break;
+      case 'choice':
+        this.choiceqn.push(this.choiceqn.length);
+        this.choiceopt.push([0]);
+        this.choiceOpt.push(['']);
+        console.log(this.choiceopt); break;
       case 'fill': this.fillqn.push(this.fillqn.length); break;
       case 'define': this.defineqn.push(this.defineqn.length); break;
       case 'shortans': this.shortansqn.push(this.shortansqn.length); break;
@@ -91,6 +95,7 @@ export class CreateExamComponent implements OnInit {
 
   addChoiceOption(choice: number, question: number){
     this.choiceopt[question].push(this.choiceopt[question].length);
+    console.log(this.choiceopt);
   }
   toChoiceLabel(choiceno: number){
     return this.choicelbl[choiceno];
@@ -136,6 +141,13 @@ export class CreateExamComponent implements OnInit {
       shortans: {
         qn: this.shortansQn,
         ans: this.shortansAns
+      },
+      content: {
+        tf: this.tf,
+        choice: this.choice,
+        fill: this.fill,
+        define: this.define,
+        shortans: this.shortans,
       }
     };
 

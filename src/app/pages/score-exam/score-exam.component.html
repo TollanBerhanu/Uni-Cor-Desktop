@@ -1,36 +1,99 @@
+<div class="bg_score"></div>
+<!-- <div class="card card-custom card-stretch gutter-b captured_photos"> -->
+
 <div class="row">
-    <div class="col-lg-5">
-      <!--begin::Callout-->
-      <div class="card card-custom p-6 mb-8 mb-lg-0 webcam_card">
-        <div class="card-body">
-          <div class="row">
-            <!--begin::Content-->
-            <div class="col-sm-12 align-items-center justify-content-sm-end webcam">
-              <webcam [height]="900" 
-                      [width]="350" 
-                      [trigger]="triggerObservable"
-                      (imageCapture)="handleImage($event)"
-                      [imageQuality]="1">
-              </webcam>
-            </div>
-            <!--end::Content-->
-            <div class="row">
-              <!--begin::Button-->
-              <div class="col-sm-12 align-items-center justify-content-sm-end">
-                <button class="btn font-weight-bolder text-uppercase font-size-lg btn-success py-3 px-6"  (click)="triggerSnapshot();">
-                  <i class="menu-icon flaticon-photo-camera"></i>
-                </button>
-              </div>
-              <!--end::Button-->
-            </div>
+  <div class="col-lg-7">
+    <!--begin::Callout-->
+    
+    <div class="form-group">
+      <!-- <label>Select Exam</label> -->
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <button class="btn btn-primary" type="button">Exam</button>
+        </div>
+        <select class="form-control" [(ngModel)]="selectedExam">
+          <option value=""></option>
+          <option *ngFor="let exam of exams" value="{{ exam._id }}">{{ exam.examname }}</option>
+        </select>
+      </div>
+    </div>
+
+
+    <div class="form-group">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Student</button>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">Choose</a>
+            <a class="dropdown-item" href="#">Student 1</a>
+            <div role="separator" class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Separated link</a>
           </div>
         </div>
+        <input type="text" class="form-control" aria-label="Text input with dropdown button">
       </div>
-      <!--end::Callout-->
+      <!-- <span class="form-text text-muted">Some help content goes here</span> -->
     </div>
-    <div class="col-lg-7">
 
-      <app-captured-photos></app-captured-photos>
-
+    <div class="row">
+      <!--begin::Content-->
+      <div class="col-lg-12 align-items-center justify-content-sm-end webcam">
+        <webcam [height]="850" 
+                [width]="400" 
+                [trigger]="triggerObservable"
+                (imageCapture)="handleImage($event)"
+                [imageQuality]="1">
+        </webcam>
+      </div>
+      <!--end::Content-->
     </div>
+
+    <!-- <div class="image-upload">
+      <img [src]="imageSrc" style="max-width:300px;max-height:300px"/>
+    </div>  -->
+
+    <div class="row">
+      <!--begin::Button-->
+      <div class="col-lg-6 align-items-center justify-content-sm-end">
+        <button class="btn font-weight-bolder text-uppercase font-size-lg btn-light-primary py-3 px-6" style="width: 90px !important; margin-left: 175px;" (click)="triggerSnapshot();">
+          <i class="menu-icon flaticon-photo-camera"></i>
+        </button>
+        <input class="form-control" name="imageUrl" accept="image/*"  type="file" id="formFileMultiple" (change)="handleInputChange($event)" multiple>
+      </div>
+      <!--end::Button-->
+    </div>
+    <br>
+    <div>
+      <button class="btn font-weight-bolder text-uppercase font-size-lg btn-success" data-toggle="modal" data-target="#exampleModalCenter" style="width: 180px !important; margin-left: 130px;" (click)="scoreExam()">
+        Score
+      </button>
+    </div>
+    <!--end::Callout-->
+  </div>
+  
+
+<!-- Modal-->
+<div class="modal fade" id="exampleModalCenter" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <i aria-hidden="true" class="ki ki-close"></i>
+        </button>
+      </div>
+      <div class="modal-body">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary font-weight-bold">Save changes</button>
+      </div>
+    </div>
+  </div>
 </div>
+
+  <div class="col-lg-5">
+    <app-captured-photos></app-captured-photos>
+  </div>
+</div>
+
+<!-- </div> -->

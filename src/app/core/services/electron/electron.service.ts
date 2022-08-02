@@ -18,6 +18,8 @@ export class ElectronService {
   mongoose: typeof mongoose;
 
   exam;
+  allExams = [];
+
 
   constructor() {
     // Conditional imports
@@ -69,10 +71,11 @@ export class ElectronService {
   }
 
   getAllExams(): any{
-    let exams = [];
+    let exam = ['none'];
     this.exam.find((err, result) => {
-      exams = result;
+      exam = result;
     });
-    return exams;
+    return exam;
   }
+
 }

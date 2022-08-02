@@ -1,0 +1,63 @@
+<div id="MyDIv" style="margin-left: 45px;" class="main-container">
+
+<div class="col-md-14">
+    <div class="card card-user body-panel">
+        <div class="card-body">
+            <div class="card-header">
+                <h3 class="card-title text-center">{{ institutionName }} </h3>
+                <h4 class="card-title text-center">{{ faculty }} </h4>
+                <h4 class="card-title text-center">{{ department }} </h4>
+                <h4 class="card-title text-center">{{ courseName }} Exam </h4>
+            </div>
+            <table class="table">
+                <thead class="thead">
+                  <tr>
+                    <th scope="col">Name: <span class="underline" style="margin-right: 30px;">________________________________________________________</span> ID: <span class="underline">_______________________</span></th>
+                  </tr>
+                </thead>
+                <thead class="thead marks">
+                  <tr>
+                    <th scope="col">Part 1: True or False</th>
+                  </tr>
+                </thead>
+                <tbody class="marks">
+                  <tr>
+                    <td><span class="underline">________</span> 1. What is this</td>
+                  </tr>
+                </tbody>
+                
+                <thead class="thead marks">
+                    <tr>
+                      <th scope="col">Part 2: Choose</th>
+                    </tr>
+                  </thead>
+                  <tbody class="marks">
+                    <tr>
+                      <td><span class="underline">________</span> 1. What is this</td>
+                    </tr>
+                    <tr>
+                        <td>A. This</td>
+                    </tr>
+                  </tbody>
+                  
+                <thead class="thead marks">
+                    <tr>
+                      <th scope="col">Part 3: Fill in the blank spaces</th>
+                    </tr>
+                  </thead>
+                  <tbody class="marks">
+                    <tr>
+                      <td>1. This is <span class="underline">______________</span></td>
+                    </tr>
+                  </tbody>
+            </table>
+            <!-- <div class="print">
+                <button (click)="onPrint()">Print</button>
+                all the stuffs I want to print
+            </div> -->
+        
+        </div>
+    </div>
+</div>
+</div>
+<button class="btn btn-danger" title="Save As PDF" (click)="exportAsPDF('MyDIv');">PDF</button>

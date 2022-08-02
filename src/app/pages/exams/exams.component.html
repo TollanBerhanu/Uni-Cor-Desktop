@@ -86,38 +86,87 @@
 <table class="datatable datatable-bordered datatable-head-custom main_content_table" id="kt_datatable_exams">
    <thead class="table_header">
        <tr>
-           <th title="{{ examTable.no }}" style="width: 20px !important;"> {{ examTable.no}} </th>
+           <!-- <th title="{{ examTable.no }}" style="width: 20px !important;"> {{ examTable.no}} </th> -->
            <th title="{{ examTable.name }}"> {{ examTable.name }} </th>
-           <th title="{{ examTable.id }}"> {{ examTable.id }} </th>
+           <!-- <th title="{{ examTable.id }}"> {{ examTable.id }} </th> -->
            <th title="{{ examTable.type }}"> {{ examTable.type }} </th>
            <th title="{{ examTable.date }}"> {{ examTable.date }} </th>
            <th title="{{ examTable.course }}"> {{ examTable.course }} </th>
            <th title="{{ examTable.code }}"> {{ examTable.code }} </th>
            <th title="{{ examTable.status }}"> {{ examTable.status }} </th>
-           <th title="{{ examTable.description }}"> {{ examTable.description }} </th>
+           <!-- <th title="{{ examTable.description }}"> {{ examTable.description }} </th> -->
            <th>Actions</th>
        </tr>
    </thead>
    <tbody class="table_body">
        <tr *ngFor="let exam of exams; let i = index">
-           <td style="width: 20px !important;">1</td>
-           <td>{{ i }}</td>
+           <!-- <td style="width: 20px !important;">{{ i+1 }} </td> -->
            <td>{{ exam.examname }}</td>
-           <td>ExId1</td>
-           <td>{{ exam.examtype }}</td>
+           <!-- <td>ExId</td> -->
+           <td>{{ (exam.examtype==='mid')?'1':(exam.examtype==='final')?'2':'3' }}</td>
+           <td>{{ exam.examdate }}</td>
+           <td>{{ courseName }}</td>
+           <td>{{ courseCode }}</td>
            <td>1</td>
-           <td>1</td>
-           <td>1</td>
-           <td>1</td>
+           <!-- <td>1</td> -->
            <td>
             <i class="menu-icon flaticon2-pen icon_link edit_exam"></i>
             <i class="menu-icon flaticon-delete icon_link delete_exam"></i>
-            <i class="menu-icon flaticon2-paper icon_link generate_ans_sheet"></i>
+            <i class="menu-icon flaticon2-paper icon_link generate_ans_sheet" data-toggle="modal" data-target="#exampleModalLong" (click)="generateSheet(exam._id, 'qs')"></i>
+            <i class="menu-icon flaticon2-paper icon_link generate_ans_sheet" data-toggle="modal" data-target="#exampleModalLong" (click)="generateSheet(exam._id, 'as')"></i>
            </td>
        </tr>
    </tbody>
 </table>
 <!--end: Datatable-->
+
+
+<!-- Button trigger modal-->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+    Launch demo modal
+</button>
+
+<!-- Modal - Question Sheet -->
+<div class="modal fade" id="exampleModalLong" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Question Sheet</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <app-generate-questionsheet></app-generate-questionsheet>
+                <!-- <router-outlet></router-outlet> -->
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary font-weight-bold">Save changes</button> -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal - Answer Sheet -->
+<div class="modal fade" id="exampleModalLong" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Answer Sheet</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <app-generate-answersheet></app-generate-answersheet>
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary font-weight-bold">Save changes</button> -->
+            </div>
+        </div>
+    </div>
+</div>
 
 </div>
 <!--end::Card-->

@@ -5,6 +5,8 @@ import { PageNotFoundComponent } from './shared/components';
 import { ScoreExamComponent } from './pages/score-exam/score-exam.component';
 import { ExamsComponent } from './pages/exams/exams.component';
 import { CreateExamComponent } from './pages/exams/create-exam/create-exam.component';
+import { GenerateQuestionsheetComponent } from './pages/exams/generate-questionsheet/generate-questionsheet.component';
+import { GenerateAnswersheetComponent } from './pages/exams/generate-answersheet/generate-answersheet.component';
 import { StudentsComponent } from './pages/students/students.component';
 import { HelpComponent } from './pages/help/help.component';
 import { SettingsComponent } from './pages/settings/settings.component';
@@ -19,7 +21,10 @@ const routes: Routes = [
   },
   {
     path: '', component: BaseLayoutComponent, children: [
-      { path: 'exams', component: ExamsComponent  }
+      { path: 'exams', component: ExamsComponent, children: [
+        { path: 'question-sheet', component: GenerateQuestionsheetComponent },
+        { path: 'answer-sheet', component: GenerateAnswersheetComponent }
+      ]  }
     ]
   },
   {

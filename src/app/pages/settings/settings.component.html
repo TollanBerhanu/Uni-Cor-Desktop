@@ -1,3 +1,115 @@
-<!-- <div class="spinner-border spinner-border-sm text-info" style="width: 5rem; height: 5rem;"></div>
-  <br/>
-  <div class="spinner-grow spinner-grow-sm text-success" style="width: 5rem; height: 5rem;"></div> -->
+<div class="d-flex flex-column-fluid">
+  <!--begin::Container-->
+  <div class="container">
+      <!--begin::Card-->
+      <div class="card card-custom card-sticky" id="kt_page_sticky_card">
+          
+              <!--begin::Form-->
+              <!-- <form class="form" id="kt_form" (ngSubmit)="onSubmit(examForm)" #examForm="ngForm"> -->
+
+          <div class="card-header" style="z-index: 90; top: 54px; left: 15px; right: 15px;">
+              <div class="card-title">
+                  <h3 class="card-label">Settings
+                  <i class="mr-2"></i>
+                  <!-- <small class="">try to scroll the page</small> -->
+              </h3>
+              </div>
+              <!-- <div class="card-toolbar">
+                  <a routerLink="/exams" class="btn btn-light-primary font-weight-bolder mr-2">
+                  <i class="ki ki-long-arrow-back icon-sm"></i>Back</a>
+              </div> -->
+          </div>
+          <div class="card-body">
+
+
+              <!--begin::Form-->
+              <!-- <form class="form" id="kt_form" (ngSubmit)="onSubmit()"> -->
+                  <div class="form-group row">
+                      <div class="col-lg-8">
+                          <label>Institution Name:</label>
+                          <input type="text" class="form-control" placeholder="Enter institution name"
+                           [(ngModel)]="institutionName">
+                          <!-- <span class="form-text text-muted">Please enter an exam name</span> -->
+                      </div>
+                      
+                      <div class="col-lg-4">
+                          <div class="form-group">
+                              <label>Institution Abbreviation:</label>
+                              <input type="text" class="form-control" placeholder=""
+                              [(ngModel)]="institutionAbbr">
+                          </div>
+                      </div>
+                  </div>
+                  
+                  <div class="form-group row">
+                    <div class="col-lg-6">
+                        <label>Faculty:</label>
+                        <input type="text" class="form-control" placeholder="Enter faculty"
+                         [(ngModel)]="faculty">
+                        <!-- <span class="form-text text-muted">Please enter an exam name</span> -->
+                    </div>
+                    
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label>Department:</label>
+                            <input type="text" class="form-control" placeholder="Department"
+                            [(ngModel)]="department">
+                        </div>
+                    </div>
+                </div>
+
+                  <div class="form-group row">
+                    <div class="col-lg-8">
+                        <label>Course Name:</label>
+                        <input type="text" class="form-control" placeholder="Enter course name"
+                         [(ngModel)]="courseName">
+                        <!-- <span class="form-text text-muted">Please enter an exam name</span> -->
+                    </div>
+                    
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label>Course Code:</label>
+                            <input type="text" class="form-control" placeholder=""
+                            [(ngModel)]="courseCode">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                  <div class="col-lg-8">
+                      <label>Instructor's Name:</label>
+                      <input type="text" class="form-control" placeholder="Enter instructor's name"
+                       [(ngModel)]="instructorName">
+                      <!-- <span class="form-text text-muted">Please enter an exam name</span> -->
+                  </div>
+
+                  <div class="col-lg-4">
+                    <div class="form-group">
+                        <label for="exampleSelect1">Prefix:</label>
+                        <select class="form-control" id="exampleSelect1"
+                          name="examtype" [(ngModel)]="prefix">
+                              <option value=""></option>
+                              <option value="Mr.">Mr.</option>
+                              <option value="Miss">Miss</option>
+                              <option value="Dr.">Dr.</option>
+                              <option value="Pr.">Pr.</option>
+                          </select>
+                    </div>
+                </div>
+              </div>
+
+              <div class="form-group row">
+                <div class="col-lg-8">
+                    <button class="btn btn-primary" (click)="saveSettings()">Save Settings</button>
+                </div>
+            </div>
+
+                  
+          </div>
+          <!-- </form> -->
+          <!--end::Form-->
+      </div>
+      <!--end::Card-->
+  </div>
+  <!--end::Container-->
+</div>

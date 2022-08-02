@@ -1,6 +1,8 @@
 import { AfterViewInit, Component, ElementRef, OnInit } from '@angular/core';
 import * as $ from 'jquery';
 import { ElectronService } from '../../core/services/electron/electron.service';
+import { ApiService } from '../../core/services/api.service';
+import { GenerateQaSheetService } from '../../core/services/generate-qa-sheet.service';
 
 @Component({
   selector: 'app-exams',
@@ -20,20 +22,37 @@ export class ExamsComponent implements OnInit, AfterViewInit {
     status: 'Status',
     description: 'Description'
   };
+  courseName = '';
+  courseCode = '';
 
   exams = [];
 
+  selectedExam = '';
+
   observer: MutationObserver;
 
-  constructor(private elRef: ElementRef, private electron: ElectronService){}
+  constructor(private elRef: ElementRef,
+    private electron: ElectronService,
+    private api: ApiService,
+    private generate: GenerateQaSheetService){}
 
   ngOnInit(){
+    this.api.getAllExams().subscribe((res: any) => {
+      this.exams.push(...res.data);
+    });
+
+    this.api.getSetting().subscribe((res: any) => {
+      res = res.data[0];
+      this.courseName = res.courseName;
+      this.courseCode = res.courseCode;
+    });
+
+    // this.exams = this.electron.allExams;
+    // console.log(this.electron.allExams);
+
     $.getScript('/assets/js/exams.js'); //Add path to your custom js file
 
-    this.exams = this.electron.getAllExams();
-    console.log(this.electron.getAllExams());
   }
-
 
   ngAfterViewInit(){
     this.observer = new MutationObserver(mutations => {
@@ -44,6 +63,10 @@ export class ExamsComponent implements OnInit, AfterViewInit {
     const config = { characterData: true };
 
     this.observer.observe(this.elRef.nativeElement);
+  }
+
+  generateSheet(id: string){
+    this.selectedExam = id;
   }
 
 }
