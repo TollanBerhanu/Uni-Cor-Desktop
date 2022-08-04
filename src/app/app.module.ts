@@ -29,6 +29,7 @@ import { CreateExamComponent } from './pages/exams/create-exam/create-exam.compo
 import { TryoutComponent } from './pages/tryout/tryout.component';
 import { GenerateQuestionsheetComponent } from './pages/exams/generate-questionsheet/generate-questionsheet.component';
 import { GenerateAnswersheetComponent } from './pages/exams/generate-answersheet/generate-answersheet.component';
+import { EditExamComponent } from './pages/exams/edit-exam/edit-exam.component';
 
 // AoT requires an exported function for factories
 const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>  new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -46,7 +47,8 @@ const httpLoaderFactory = (http: HttpClient): TranslateHttpLoader =>  new Transl
     CreateExamComponent,
     TryoutComponent,
     GenerateQuestionsheetComponent,
-    GenerateAnswersheetComponent
+    GenerateAnswersheetComponent,
+    EditExamComponent
   ],
   imports: [
     BrowserModule,

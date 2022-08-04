@@ -13,6 +13,32 @@ import { ApiService } from '../../core/services/api.service';
 export class ScoreExamComponent implements OnInit {
 
   exams = [];
+  students = [];
+
+  allAnswers = {
+    tf: {
+      my: [],
+      score: []
+    },
+    choice: {
+      my: [],
+      score: []
+    },
+    fill: {
+      my: [],
+      score: []
+    },
+    define: {
+      my: [],
+      score: []
+    },
+    shortans: {
+      my: [],
+      score: []
+    },
+    content: {}
+  };
+
   selectedExam = '';
   imageSrc = '';
 
@@ -31,7 +57,10 @@ export class ScoreExamComponent implements OnInit {
   ngOnInit(): void {
     this.api.getAllExams().subscribe((res: any) => {
       this.exams.push(...res.data);
-      console.log(this.exams);
+    });
+
+    this.api.getAllStudents().subscribe((res: any) => {
+      this.students.push(...res.data);
     });
   }
 
@@ -74,6 +103,7 @@ export class ScoreExamComponent implements OnInit {
   scoreExam(){
     this.api.scoreExam(this.captureService.getPhotos(), this.selectedExam).subscribe((res: any) => {
       console.log(res);
+      this.allAnswers = res;
     });
 
   }

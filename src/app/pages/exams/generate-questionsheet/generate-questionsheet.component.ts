@@ -20,6 +20,8 @@ export class GenerateQuestionsheetComponent implements OnInit {
   instructorName = '';
   prefix = '';
 
+  exam: any;
+
   constructor(private api: ApiService, private generate: GenerateQaSheetService) { }
 
   ngOnInit(): void {
@@ -41,6 +43,12 @@ export class GenerateQuestionsheetComponent implements OnInit {
     this.api.getAllExams().subscribe((res: any) => {
       console.log(res);
     });
+
+    this.setExam(this.generate.getSelectedExam());
+  }
+
+  setExam(exam: any){
+    console.log(exam);
   }
 
   exportAsPDF(divId: string)

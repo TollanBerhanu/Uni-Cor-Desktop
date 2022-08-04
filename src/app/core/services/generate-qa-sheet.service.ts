@@ -6,7 +6,9 @@ import { Observable } from 'rxjs';
 })
 export class GenerateQaSheetService {
 
-  selectedExam: Observable<string>;
+  selectedExam: string;
+
+  toBeEdited: number = 1;
 
   constructor() { }
 

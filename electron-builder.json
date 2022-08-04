@@ -26,8 +26,8 @@
   },
 
   "nsis": {
-    "installerIcon": "src/icon.ico",
-    "uninstallerIcon": "src/icon.ico",
+    "installerIcon": "src/unicor.png",
+    "uninstallerIcon": "src/unicor.png",
     "uninstallDisplayName": "Uni-Cor Uninstaller",
     "license": "src/license.txt",
     "oneClick": false,

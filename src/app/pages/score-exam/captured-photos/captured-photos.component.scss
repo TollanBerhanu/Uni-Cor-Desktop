@@ -12,3 +12,8 @@ div.captured_photos_header{
 .capruted_photo_sheet{
     margin: auto;
 }
+.pages_body{
+    position: absolute;
+    top: 70px;
+    z-index: -1;
+}

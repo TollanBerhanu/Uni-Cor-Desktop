@@ -38,3 +38,47 @@ i.delete_exam:hover{
 i.generate_ans_sheet:hover{
     color: rgb(51, 212, 30);
 }
+
+
+
+
+.underline{
+    font-family: 'Courier New', Courier, monospace;
+}
+.dt_row:hover{
+    background-color: #eee;
+    cursor: pointer;
+}
+//Action table
+.action_table{
+    background-color: white;
+    margin-top: 45px;
+    margin-left: -45px;
+    border-radius: 5px;
+}
+.action_table_body{
+    padding: 13px 5px;
+    border: none;
+}
+
+table.question_sheet tr td{
+    border: none;
+} 
+// table.answer_sheet tr td{
+//     border-color: #222;
+// } 
+table.question_sheet, table.answer_sheet{
+    color: #000;
+    font-size: 20px;
+}
+.exam_header{
+    color: #000;
+    font-size: 15px;
+}
+.part_header{
+    font-size: 20px;
+}
+.name_id{
+    color: #000;
+    font-size: 15px;
+}

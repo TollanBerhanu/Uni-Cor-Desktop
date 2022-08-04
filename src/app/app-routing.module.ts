@@ -12,6 +12,7 @@ import { HelpComponent } from './pages/help/help.component';
 import { SettingsComponent } from './pages/settings/settings.component';
 import { TryoutComponent } from './pages/tryout/tryout.component';
 import { BaseLayoutComponent } from './common/base-layout/base-layout.component';
+import { EditExamComponent } from './pages/exams/edit-exam/edit-exam.component';
 
 const routes: Routes = [
   {
@@ -23,13 +24,18 @@ const routes: Routes = [
     path: '', component: BaseLayoutComponent, children: [
       { path: 'exams', component: ExamsComponent, children: [
         { path: 'question-sheet', component: GenerateQuestionsheetComponent },
-        { path: 'answer-sheet', component: GenerateAnswersheetComponent }
+        { path: 'answer-sheet', component: GenerateAnswersheetComponent },
       ]  }
     ]
   },
   {
     path: '', component: BaseLayoutComponent, children: [
       { path: 'create-exam', component: CreateExamComponent  }
+    ]
+  },
+  {
+    path: '', component: BaseLayoutComponent, children: [
+      { path: 'edit-exam', component: EditExamComponent  }
     ]
   },
   {

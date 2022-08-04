@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { ipcRenderer } from 'electron';
-import * as fs from 'fs';
+import { ApiService } from '../../../core/services/api.service';
 import { ElectronService } from '../../../core/services/electron/electron.service';
+import { GenerateQaSheetService } from '../../../core/services/generate-qa-sheet.service';
 
 @Component({
-  selector: 'app-create-exam',
-  templateUrl: './create-exam.component.html',
-  styleUrls: ['./create-exam.component.scss']
+  selector: 'app-edit-exam',
+  templateUrl: './edit-exam.component.html',
+  styleUrls: ['./edit-exam.component.scss']
 })
-export class CreateExamComponent implements OnInit {
+export class EditExamComponent implements OnInit {
   sectionsAdded: string[] = [];
 
   tf = false;
@@ -39,16 +39,53 @@ export class CreateExamComponent implements OnInit {
   shortansQn: string[] = [];
   shortansAns: string[] = [];
 
-  tfWeight = 1;
-  choiceWeight = 1;
-  fillWeight = 1;
-  defineWeight = 1;
-  shortansWeight = 1;
+  examID: string;
 
-
-  constructor(private electron: ElectronService) { }
+  constructor(private electron: ElectronService, private api: ApiService, private edit: GenerateQaSheetService) { }
 
   ngOnInit(): void {
+    this.api.getAllExams().subscribe((res: any) => {
+      res = res.data[this.edit.toBeEdited];
+
+      this.examID = res._id;
+
+      //Section content
+      this.examName = res.examname;
+      this.examType = res.examtype;
+      this.tfQn = res.exam.tf.qn;
+      this.tfAns = res.exam.tf.ans;
+      this.choiceQn = res.exam.choice.qn;
+      this.choiceAns = res.exam.choice.ans;
+      this.choiceOpt = res.exam.choice.opt;
+      this.fillQn = res.exam.fill.qn;
+      this.fillAns = res.exam.fill.ans;
+      this.defineQn = res.exam.define.qn;
+      this.defineAns = res.exam.define.ans;
+      this.shortansQn = res.exam.shortans.qn;
+      this.shortansAns = res.exam.shortans.ans;
+
+      //Section Visibility
+      this.tf = res.exam.content.tf;
+      this.choice = res.exam.content.choice;
+      this.fill = res.exam.content.fill;
+      this.define = res.exam.content.define;
+      this.shortans = res.exam.content.shortans;
+
+      //Question Visibility
+      this.tfqn = res.exam.tf.qn;
+      this.choiceqn = res.exam.choice.qn;
+      this.choiceopt = res.exam.choice.opt;
+      this.fillqn = res.exam.fill.qn;
+      this.defineqn = res.exam.define.qn;
+      this.shortansqn = res.exam.shortans.qn;
+
+      //Section numbers
+      if(this.tf) {this.sectionsAdded.push('tf');}
+      if(this.choice) {this.sectionsAdded.push('choice');}
+      if(this.fill) {this.sectionsAdded.push('fill');}
+      if(this.define) {this.sectionsAdded.push('define');}
+      if(this.shortans) {this.sectionsAdded.push('shortans');}
+    });
   }
 
   addSection(section: string){
@@ -129,7 +166,7 @@ export class CreateExamComponent implements OnInit {
     const examContent = {
       tf: {
         qn: this.tfQn,
-        ans: this.tfAns,
+        ans: this.tfAns
       },
       choice: {
         qn: this.choiceQn,
@@ -154,18 +191,11 @@ export class CreateExamComponent implements OnInit {
         fill: this.fill,
         define: this.define,
         shortans: this.shortans,
-      },
-      weight: {
-        tf: this.tfWeight,
-        choice: this.choiceWeight,
-        fill: this.fillWeight,
-        define: this.defineWeight,
-        shortans: this.shortansWeight
       }
     };
 
     console.log(examContent);
-    this.electron.saveExam(this.examName, this.examType, examContent);
+    this.api.updateExam({examname: this.examName, examtype: this.examType, exam: examContent}, this.examID);
 
     // ipcRenderer.send('msg', 'Hello from angular');
     // ipcRenderer.on('reply', (event, data)=> {

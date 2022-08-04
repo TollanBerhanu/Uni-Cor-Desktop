@@ -9,7 +9,7 @@
 
             <div class="card-header" style="z-index: 90; top: 54px; left: 15px; right: 15px;">
                 <div class="card-title">
-                    <h3 class="card-label">Create New Exam
+                    <h3 class="card-label">Edit Exam
                     <i class="mr-2"></i>
                     <!-- <small class="">try to scroll the page</small> -->
                 </h3>
@@ -18,7 +18,7 @@
                     <a routerLink="/exams" class="btn btn-light-primary font-weight-bolder mr-2">
                     <i class="ki ki-long-arrow-back icon-sm"></i>Back</a>
                     <div class="btn-group">
-                        <button type="button" (click)="sendToElectron()" class="btn btn-primary font-weight-bolder" data-toggle="modal" data-target="#saveModal">
+                        <button type="button" (click)="sendToElectron()" class="btn btn-primary font-weight-bolder">
                         <i class="ki ki-check icon-sm"></i>Save Exam</button>
                         <button type="button" class="btn btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
                         <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
@@ -27,18 +27,6 @@
                                     <a href="#" class="nav-link" (click)="sendToElectron()">
                                         <i class="nav-icon flaticon2-reload"></i>
                                         <span class="nav-text">Save &amp; continue</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon flaticon2-add-1"></i>
-                                        <span class="nav-text">Save &amp; add new</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a href="#" class="nav-link">
-                                        <i class="nav-icon flaticon2-power"></i>
-                                        <span class="nav-text">Save &amp; exit</span>
                                     </a>
                                 </li>
                             </ul>
@@ -89,13 +77,8 @@
                     <!-- Begin: Part Title -->
                     <div *ngIf="tf"  class="row">
                         <div class="col-xl-1"></div>
-                        <div class="col-xl-8" (dblclick)="removeSection('tf')" style="width: 70%;">
+                        <div class="col-xl-8" (dblclick)="removeSection('tf')">
                                 <h4 class="text-dark font-weight-bold mb-10 section_header">Part {{ resolveSection('tf') }}: True or False</h4>
-                        </div>
-                        <div class="col-lg-2">
-                            <label>Pts. Each:</label>
-                            <input type="number" class="form-control"
-                            [(ngModel)]="tfWeight">
                         </div>
                     </div>
                     <!-- End: Part Title -->
@@ -147,13 +130,8 @@
                     <!-- Begin: Part Title -->
                     <div *ngIf="choice" class="row part_divider">
                         <div class="col-xl-1"></div>
-                        <div class="col-xl-8" (dblclick)="removeSection('choice')"  style="width: 70%;">
+                        <div class="col-xl-8" (dblclick)="removeSection('choice')">
                                 <h4 class="text-dark font-weight-bold mb-10 section_header">Part {{ resolveSection('choice') }}: Choice</h4>
-                        </div>
-                        <div class="col-lg-2">
-                            <label>Pts. Each:</label>
-                            <input type="number" class="form-control"
-                            [(ngModel)]="choiceWeight">
                         </div>
                     </div>
                     <!-- End: Part Title -->
@@ -216,13 +194,8 @@
                     <!-- Begin: Part Title -->
                     <div *ngIf="fill" class="row part_divider">
                         <div class="col-xl-1"></div>
-                        <div class="col-xl-8" (dblclick)="removeSection('fill')" style="width: 70%;">
+                        <div class="col-xl-8" (dblclick)="removeSection('fill')">
                                 <h4 class="text-dark font-weight-bold mb-10 section_header">Part {{ resolveSection('fill') }}: Fill in the blank spaces</h4>
-                        </div>
-                        <div class="col-lg-2">
-                            <label>Pts. Each:</label>
-                            <input type="number" class="form-control"
-                            [(ngModel)]="fillWeight">
                         </div>
                     </div>
                     <!-- End: Part Title -->
@@ -270,13 +243,8 @@
                     <!-- Begin: Part Title -->
                     <div *ngIf="define" class="row part_divider">
                         <div class="col-xl-1"></div>
-                        <div class="col-xl-8" (dblclick)="removeSection('define')" style="width: 70%;">
+                        <div class="col-xl-8" (dblclick)="removeSection('define')">
                                 <h4 class="text-dark font-weight-bold mb-10 section_header">Part {{ resolveSection('define') }}: Define the following terms</h4>
-                        </div>
-                        <div class="col-lg-2">
-                            <label>Pts. Each:</label>
-                            <input type="number" class="form-control"
-                            [(ngModel)]="defineWeight">
                         </div>
                     </div>
                     <!-- End: Part Title -->
@@ -324,13 +292,8 @@
                      <!-- Begin: Part Title -->
                      <div *ngIf="shortans" class="row part_divider">
                         <div class="col-xl-1"></div>
-                        <div class="col-xl-8" (dblclick)="removeSection('shortans')" style="width: 70%;">
+                        <div class="col-xl-8" (dblclick)="removeSection('shortans')">
                                 <h4 class="text-dark font-weight-bold mb-10 section_header">Part {{ resolveSection('shortans') }}: Short Answer</h4>
-                        </div>
-                        <div class="col-lg-2">
-                            <label>Pts. Each:</label>
-                            <input type="number" class="form-control"
-                            [(ngModel)]="shortansWeight">
                         </div>
                     </div>
                     <!-- End: Part Title -->
@@ -418,30 +381,6 @@
             </div>
             <!-- </form> -->
             <!--end::Form-->
-
-
-            <!-- Save Modal-->
-            <div class="modal fade" id="saveModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered" role="document">
-                    <div class="modal-content">
-                        <!-- <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Exam Saved!</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <i aria-hidden="true" class="ki ki-close"></i>
-                            </button>
-                        </div> -->
-                        
-                        <div class="modal-body">
-                            <h5 class="modal-title" id="exampleModalLabel">Exam Saved!</h5>
-                            <br><br>
-                            <button type="button" class="btn btn-primary font-weight-bold" data-dismiss="modal">OK</button>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
         </div>
         <!--end::Card-->
     </div>

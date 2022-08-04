@@ -14,10 +14,11 @@ const getMany = model => async (req, res) => {
 }
 
 const createOne = model => async (req, res) => {
+    console.log(req.body);
     // const doc = await model.create({ ...req.body, createdBy: req.user._id })
     const doc = await model.create(req.body)
     if(!doc) res.status(404).end()
-    console.log('Successfully registered!' + req.user)
+    console.log('Successfully registered!')
     res.status(200).send({ data: doc })
 }
 

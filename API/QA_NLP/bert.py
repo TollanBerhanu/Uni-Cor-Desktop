@@ -11,10 +11,10 @@ tokenizer = BertTokenizer.from_pretrained('bert-large-uncased-whole-word-masking
 
 
 
-def answer_question(question):
+def answer_question(question, answer_text):
     
-    question = "what is cleanroom?"
-    answer_text = "Clean room software engineering is a software development approach to producing quality software. It is different from classical software engineering as in classical software engineering QA (Quality Assurance) is the last phase of development that occurs at the completion of all development stages while there is a chance of less reliable and fewer quality products full of bugs, and errors and upset client, etc. But in clean room software engineering, an efficient and good quality software product is delivered to the client as QA (Quality Assurance) is performed each and every phase of software development.The cleanroom software engineering follows a quality approach to software development which follows a set of principles and practices for gathering requirements, designing, coding, testing, managing, etc. which not only improves the quality of the product but also increases productivity and reduces development cost. From the beginning of the system development to the completion of system development it emphasizes removing the dependency on the costly processes and preventing defects during development rather than removing the defects.The clean room approach was developed by Dr. Harlan Mills of IBM’s Federal Systems Division, and it was released in the year 1981 but got popularity after 1987 when IBM and other organizations started using it.The cleanroom is software development process intended to produce software with a certifiable level of reliability. The cleanroom process was originally developed by Harlan Mills and several of his colleagues including Alan Hevner at IBM.The focus of the cleanroom process is on defect prevention, rather than defect removal. The name cleanroom was chosen to evoke the cleanrooms used in the electronics industry to prevent the introduction of defects during the fabrication of semiconductors. The cleanroom process first saw use in the mid to late 1980s. Demonstration projects within the military began in the early 1990s."
+    # question = "what is cleanroom?"
+    # answer_text = "Clean room software engineering is a software development approach to producing quality software. It is different from classical software engineering as in classical software engineering QA (Quality Assurance) is the last phase of development that occurs at the completion of all development stages while there is a chance of less reliable and fewer quality products full of bugs, and errors and upset client, etc. But in clean room software engineering, an efficient and good quality software product is delivered to the client as QA (Quality Assurance) is performed each and every phase of software development.The cleanroom software engineering follows a quality approach to software development which follows a set of principles and practices for gathering requirements, designing, coding, testing, managing, etc. which not only improves the quality of the product but also increases productivity and reduces development cost. From the beginning of the system development to the completion of system development it emphasizes removing the dependency on the costly processes and preventing defects during development rather than removing the defects.The clean room approach was developed by Dr. Harlan Mills of IBM’s Federal Systems Division, and it was released in the year 1981 but got popularity after 1987 when IBM and other organizations started using it.The cleanroom is software development process intended to produce software with a certifiable level of reliability. The cleanroom process was originally developed by Harlan Mills and several of his colleagues including Alan Hevner at IBM.The focus of the cleanroom process is on defect prevention, rather than defect removal. The name cleanroom was chosen to evoke the cleanrooms used in the electronics industry to prevent the introduction of defects during the fabrication of semiconductors. The cleanroom process first saw use in the mid to late 1980s. Demonstration projects within the military began in the early 1990s."
 
     # Apply the tokenizer to the input text, treating them as a text-pair.
     input_ids = tokenizer.encode(question, answer_text)
@@ -85,10 +85,16 @@ def answer_question(question):
     answer_start = torch.argmax(start_scores)
     answer_end = torch.argmax(end_scores)
 
+    # s_scores = start_scores.detach().numpy().flatten()
+    # e_scores = end_scores.detach().numpy().flatten()
+
+    # print(s_scores)
+    # print(e_scores)
+
     # Combine the tokens in the answer and print it out.
     answer = ' '.join(tokens[answer_start:answer_end+1])
 
-    print('Answer: "' + answer + '"')
+    # print('Answer: "' + answer + '"')
 
     """It got it right! Awesome :)
 
@@ -126,7 +132,7 @@ def response():
     content = request.get_json()
     print(content)
     print(request)
-    result = answer_question(content['question'])
+    result = answer_question(content['question'], content['context'])
     return jsonify({"answer": result})
 
 

@@ -40,6 +40,10 @@ export class ApiService {
   updateSetting(formData: Object, id: string){
     return this.webReqService.put(`setting/${id}`, formData);
   }
+  updateExam(formData: Object, id: string){
+    return this.webReqService.put(`exam/${id}`, formData);
+  }
+
   //'Retrieve one' methods
   getOneExam(id: string){
     return this.webReqService.get(`exam/:${id}`);
