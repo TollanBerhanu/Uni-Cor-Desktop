@@ -14,6 +14,7 @@ export class ScoreExamComponent implements OnInit {
 
   exams = [];
   students = [];
+  selectedStudent = '';
 
   allAnswers = {
     tf: {
@@ -39,7 +40,10 @@ export class ScoreExamComponent implements OnInit {
     content: {}
   };
 
+  myScore = 0;
+
   selectedExam = '';
+  selectedExamName = '';
   imageSrc = '';
 
   videoRef: any;
@@ -104,8 +108,51 @@ export class ScoreExamComponent implements OnInit {
     this.api.scoreExam(this.captureService.getPhotos(), this.selectedExam).subscribe((res: any) => {
       console.log(res);
       this.allAnswers = res;
+
+      if(res.content.tf){
+        res.tf.forEach((rm) => {
+          if(rm.score === 'correct') {this.myScore++;}
+        });
+      }
+      if(res.content.choice){
+        res.choice.forEach((rm) => {
+          if(rm.score === 'correct') {this.myScore++;}
+        });
+      }
+      if(res.content.fill){
+        res.fill.forEach((rm) => {
+          if(rm.score === 'correct') {this.myScore++;}
+        });
+      }
+      if(res.content.define){
+        res.define.forEach((rm) => {
+          if(rm.score === 'correct') {this.myScore++;}
+        });
+      }
+      if(res.content.shortans){
+        res.shortans.forEach((rm) => {
+          if(rm.score === 'correct') {this.myScore++;}
+        });
+      }
     });
 
+  }
+
+  examName(name){
+    this.selectedExamName = name;
+  }
+
+  saveScore(){
+
+    const data = {
+      studentname: this.selectedStudent,
+      examname: this.selectedExamName,
+      score: this.myScore
+    };
+
+    this.api.saveScore(data).subscribe((res: any) => {
+      console.log(res);
+    });
   }
 
 }

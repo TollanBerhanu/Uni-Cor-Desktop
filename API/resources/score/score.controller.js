@@ -3,6 +3,7 @@ const imageDataURI = require('image-data-uri')
 const vision = require('@google-cloud/vision');
 const tesseract = require("node-tesseract-ocr")
 const fs = require("fs")
+const axios = require('axios')
 
 const controller = require('../controller/crud.controller')
 const ScoreModel = require('./score.model')
@@ -26,8 +27,8 @@ exampleText1 = 'NAME: FIRST NAME ID: RU1234/11 PART 1: TRUE OR FALSE 1) True 2) 
 exampleText='Part One : True or False 1. Faise 2. True 3. False 4 , false 5. Faise 6. False'+'Part two : Choose 1. D 2. b 3. d 4. a 5. B 6. C '+
 'Part three: Fill 1. needs 2. goal 3. risk'+
 'Part four :Define 1. The of person who creates and develops a business idea 2. A Social and managerial process by which an individual '+
-'art five : Short answer 1. An ability to consider the business as a whole deliver value to its customers better than competitors 2.'+
-' Refers to determining the strengths and weaknesses of competitors'
+'art five : Short answer 1. An ability to consider the business as a whole deliver value to its customers better than competitors '+
+'2. Refers to determining the strengths and weaknesses of competitors'
 
 
 var all_answers
@@ -123,11 +124,11 @@ async function logic(sheets, selectedExam){
       
       // console.log('***** \n ' + wholeText + '\n *****')
 
-      // text = formatText(exampleText)
       for (const sheet of sheets)
-        wholeText = await iterateExamSheets(sheet)
-
-      let text = formatText(wholeText)
+      wholeText = await iterateExamSheets(sheet)
+      
+      text = formatText(exampleText)
+      // let text = formatText(wholeText)
 
       tf_ans = []
 
@@ -260,47 +261,216 @@ async function logic(sheets, selectedExam){
         // console.log('My Fill Ans: ' + fill_ans)
       }
 
+      //----------------------------------------------------------------------------------------------------------------
+
       define_ans = []
-      define_score = []
+
+      if(selectedExam.exam.content.define && false){ // check if section exists... define
+        
+        let define = await examSection(text, 'define')
+        console.log(define)
+
+        selectedExam.exam.define.ans.forEach((answer, i) => {
+         
+          let my = ''
+          let score = ''
+         
+          ans = define.substring(define.indexOf(i+1), define.indexOf(i+2))
+          if(selectedExam.exam.define.ans.length == i+1) ans = define.substring(define.indexOf(i+1))
+          if(ans.length > 1) my = ans
+          else my = 'wrong'
+          // console.log('Ans: ' + (i+1) + ': ' + ans + ' \n')
+
+          //Score define
+          if(answer.toLowerCase().includes(my.substring(7).toLowerCase()) || my.substring(7).toLowerCase().includes(answer.toLowerCase())) score = 'correct'
+          else score = 'incorrect'
+
+          define_ans.push({ my, score })
+        })
+        
+        // console.log('My define Ans: ' + define_ans)
+      }
+
+      shortans_ans = []
+
+      if(selectedExam.exam.content.shortans && false){ // check if section exists... shortans
+        
+        let shortans = await examSection(text, 'short')
+
+        selectedExam.exam.shortans.ans.forEach((answer, i) => {
+         
+          let my = ''
+          let score = ''
+         
+          ans = shortans.substring(shortans.indexOf(i+1), shortans.indexOf(i+2))
+          if(selectedExam.exam.shortans.ans.length == i+1) ans = shortans.substring(shortans.indexOf(i+1))
+          if(ans.length > 1) my = ans
+          else my = 'wrong'
+          // console.log('Ans: ' + (i+1) + ': ' + ans + ' \n')
+
+          //Score shortans
+          if(answer.toLowerCase().includes(my.substring(5).toLowerCase()) || my.substring(5).toLowerCase().includes(answer.toLowerCase())) score = 'correct'
+          else score = 'incorrect'
+
+          shortans_ans.push({ my, score })
+        })
+        
+        // console.log('My shortans Ans: ' + shortans_ans)
+      }
+
+
+
+      
+      //----------------------------------------------------------------------------------------------------------------
+
+      
+      async function compareNLPDefine(context, question, answer){
+        
+      }
+
+      // define_ans = []
 
       if(selectedExam.exam.content.define){ // check if section exists... define
         
         let define = await examSection(text, 'define')
 
-        selectedExam.exam.define.ans.forEach((answer, i) => {
+        // selectedExam.exam.define.ans.forEach((answer, i) => {
+        var i=0;
+        for(var answer in selectedExam.exam.define.ans){
+
+        let my = ''
+        // let score = ''
+
           ans = define.substring(define.indexOf(i+1), define.indexOf(i+2))
           if(selectedExam.exam.define.ans.length == i+1) ans = define.substring(define.indexOf(i+1))
-          if(ans.length > 1) define_ans.push(ans)
-          else define_ans.push('wrong')
+          if(ans.length > 1) my = ans
+          else my = 'wrong'
           // console.log('Ans: ' + (i+1) + ': ' + ans + ' \n')
           
           //Score Define
-          if(answer.toLowerCase() === define_ans[i]) define_score.push('correct')
-          else define_score.push(answer.toLowerCase())
-        })
+          // score = await compareNLPDefine(answer.toLowerCase(), selectedExam.exam.define.qn[i], my)
+
+
+          context = answer.toLowerCase()
+          question =selectedExam.exam.define.qn[i]
+          answerr = my
+
+          //Compare context with question
+        axios.post('http://127.0.0.1:5000/qas', 
+        {
+          question: answerr,
+          context: context
+        }
+        ).then(qn => {
+          // console.log(`statusCode: ${qn.status}`);
+          // console.log(qn);
+          console.log('\n********************************\n')
+          console.log(qn.data.answer)
+          if(qn.data.answer.toLowerCase().includes(question.toLowerCase()) || 
+          question.toLowerCase().includes(qn.data.answer.toLowerCase())) score = 'correct'
+          else score = 'incorrect'
+          console.log(score)
+          define_ans.push({ my, score })
+
+        }).catch(error => {
+          console.error(error);
+        });
+
+
+
+          // let score = (checkDefine)?'correct':'incorrect'
+          // if(checkDefine) score ='correct'
+          // else score = 'incorrect'
+          // else define_score.push(answer.toLowerCase())
+          
+          i++
+        }
+          // })
         
         // console.log('My Define Ans: ' + define_ans)
-        // console.log('Correct Define Ans: ' + define_score)
       }
 
-      shortans_ans = []
-      shortans_score = []
+
+
+      async function compareNLPShortans(context, question, answer){
+        //Compare context with question
+        
+      }
+
+      // shortans_ans = []
 
       if(selectedExam.exam.content.shortans){ // check if section exists... shortans
         
         let shortans = await examSection(text, 'short')
 
-        selectedExam.exam.shortans.ans.forEach((answer, i) => {
+        var i=0
+        // selectedExam.exam.shortans.ans.forEach((answer, i) => {
+          for(var answer in selectedExam.exam.shortans.ans) {
+          
+          let my = ''
+
           ans = shortans.substring(shortans.indexOf(i+1), shortans.indexOf(i+2))
           if(selectedExam.exam.shortans.ans.length == i+1) ans = shortans.substring(shortans.indexOf(i+1))
-          if(ans.length > 1) shortans_ans.push(ans)
-          else shortans_ans.push('wrong')
+          if(ans.length > 1) my = ans
+          else my = 'wrong'
           // console.log('Ans: ' + (i+1) + ': ' + ans + ' \n')
 
-          //Score Define
-          if(answer.toLowerCase() === shortans_ans[i]) shortans_score.push('correct')
-          else shortans_score.push(answer.toLowerCase())
-        })
+          //Score Shortans
+          // score = await compareNLPShortans(answer.toLowerCase(), selectedExam.exam.shortans.qn[i], my)
+          // let score = (checkShortans)?'correct':'incorrect'
+          // else score = 'incorrect'
+          // else shortans_score.push(answer.toLowerCase())
+
+
+          context = answer.toLowerCase()
+          question =selectedExam.exam.shortans.qn[i]
+          answerr = my
+
+          axios.post('http://127.0.0.1:5000/qas', 
+        {
+          question: question,
+          context: context
+        }
+        ).then(qn => {
+          // console.log(`statusCode: ${qn.status}`);
+          // console.log(qn);
+          console.log('\n********************************\n')
+                console.log(qn.data.answer)
+
+          axios.post('http://127.0.0.1:5000/qas', 
+          {
+            question: answerr,
+            context: context
+          }
+          ).then(ans => {
+            // console.log(`statusCode: ${ans.status}`);
+            // console.log(ans);
+            //Compare context with answer
+            console.log('\n********************************\n')
+            console.log(ans.data.answer)
+            if(qn.data.answer.toLowerCase().includes(ans.data.answer.toLowerCase()) || 
+            ans.data.answer.toLowerCase().includes(qn.data.answer.toLowerCase())) 
+            score = 'correct'
+            else score = 'incorrect' 
+
+            shortans_ans.push({ my, score })
+
+            return
+
+          }).catch(error => {
+            console.error(error);
+          });
+        }).catch(error => {
+          console.error(error);
+        });
+
+
+
+          
+          
+        i++  
+        }
+          // })
 
         // console.log('My Shortans Ans: ' + shortans_ans)
         // console.log('Correct Shortans Ans: ' + shortans_score)
@@ -311,14 +481,8 @@ async function logic(sheets, selectedExam){
         tf: tf_ans,
         choice: choice_ans,
         fill: fill_ans,
-        define: {
-          my: define_ans,
-          score: define_score
-        },
-        shortans: {
-          my: shortans_ans,
-          score: shortans_score
-        },
+        define: define_ans,
+        shortans: shortans_ans,
         content: selectedExam.exam.content
       }
 

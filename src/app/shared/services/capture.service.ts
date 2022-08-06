@@ -20,4 +20,8 @@ export class CaptureService{
   getPhotos(): WebcamImage[]{
       return this.capturedPhotos;
   }
+
+  removePhoto(i: number){
+    this.capturedPhotos.splice(i, 1); // 2nd parameter means remove one item only
+  }
 }

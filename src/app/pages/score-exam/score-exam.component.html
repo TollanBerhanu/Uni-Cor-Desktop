@@ -24,7 +24,7 @@
               <select class="form-control form-control-solid" id="exampleSelect1"
               [(ngModel)]="selectedExam">
                 <option value=""></option>
-                <option *ngFor="let exam of exams" value="{{ exam._id }}">{{ exam.examname }}</option>
+                <option *ngFor="let exam of exams" value="{{ exam._id }}" (select)="examName(exam.examname)">{{ exam.examname }}</option>
               </select>
           </div>
       </div>
@@ -93,7 +93,7 @@
 
 <!-- Score Modal-->
 <div class="modal fade" id="exampleModalCenter" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Scored Exam</h5>
@@ -107,7 +107,7 @@
           <!-- Name and ID -->
           <thead class="thead">
             <tr>
-              <th class="name_id" scope="col" colspan="2">Name: <span class="underline" style="margin-right: 30px;"></span> ID: <span class="underline"></span></th>
+              <th class="name_id" scope="col" colspan="2">Name: <span class="underline" style="margin-right: 30px;">{{ selectedStudent }}</span><span class="underline" style="position:absolute; right: 30px;">Total Points: {{ myScore }}</span> </th>
             </tr>
           </thead>
           <!-- True od False -->
@@ -163,11 +163,12 @@
               </tr>
             </thead>
             <tbody class="marks">
-              <!-- <tr *ngFor="let ans of allAnswers.define; let i = index">
-                <td>{{ i+1 }}.  <span class="underline">______________________________________________________________________________</span>
-                  <br><br><span class="underline">________________________________________________________________________________</span>
-              </td>
-              </tr> -->
+              <tr *ngFor="let ans of allAnswers.define; let i = index">
+                <td>{{ i+1 }}. <span class="underline">{{ ans.my }}</span></td>
+                <td *ngIf="ans.score === 'correct'"><i class="menu-icon flaticon2-check-mark correct"></i></td>
+                <td class="wrong" *ngIf="ans.score !== 'correct'">{{ ans.score }}</td>
+                <td class="wrong" *ngIf="ans.score !== 'correct'"><i class="menu-icon flaticon2-cross incorrect"></i></td>
+          </tr>
             </tbody>
           </div>
           <!-- Short Answer -->
@@ -178,12 +179,11 @@
               </tr>
             </thead>
             <tbody class="marks">
-              <!-- <tr *ngFor="let ans of allAnswers.shortans; let i = index">
-                  <td>{{ i+1 }}.  <span class="underline">______________________________________________________________________________</span>
-                  <br><br><span class="underline">________________________________________________________________________________</span>
-                  <br><br><span class="underline">________________________________________________________________________________</span>
-                 
-              </tr> -->
+              <tr *ngFor="let ans of allAnswers.shortans; let i = index">
+                <td>{{ i+1 }}. <span class="underline">{{ ans.my }}</span></td>
+                <td *ngIf="ans.score === 'correct'"><i class="menu-icon flaticon2-check-mark correct"></i></td>
+                <td class="wrong" *ngIf="ans.score !== 'correct'">{{ ans.score }}</td>
+              </tr>
             </tbody>
           </div>
       </table>
@@ -191,9 +191,25 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary font-weight-bold">Save changes</button>
+        <button type="button" class="btn btn-primary font-weight-bold" data-toggle="modal" data-target="#saveModal" (click)="saveScore()">Save Score</button>
       </div>
     </div>
+
+     <!-- Save Modal-->
+     <div class="modal fade" id="saveModal" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+              <div class="modal-body">
+                  <h5 class="modal-title" id="exampleModalLabel">Score Saved!</h5>
+                  <br><br>
+                  <button type="button" class="btn btn-primary font-weight-bold" data-dismiss="modal">OK</button>
+
+              </div>
+          </div>
+      </div>
+  </div>
+
+
   </div>
 </div>
 

@@ -24,6 +24,9 @@ export class ApiService {
   saveSetting(formData: Object){
     return this.webReqService.post('setting', formData);
   }
+  saveScore(formData: Object){
+    return this.webReqService.post('class', formData);
+  }
 
   //'Retrieve' methods
   getAllStudents(){
@@ -34,6 +37,9 @@ export class ApiService {
   }
   getSetting(){
     return this.webReqService.get('setting');
+  }
+  getScore(){
+    return this.webReqService.get('class');
   }
 
   //'Update' methods

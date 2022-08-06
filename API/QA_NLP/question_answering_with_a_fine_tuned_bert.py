@@ -187,6 +187,9 @@ outputs = model(torch.tensor([input_ids]), # The tokens representing our input t
 start_scores = outputs.start_logits
 end_scores = outputs.end_logits
 
+print('Model:.....')
+print(start_scores)
+
 """Now we can highlight the answer just by looking at the most probable start and end words. """
 
 # Find the tokens with the highest `start` and `end` scores.

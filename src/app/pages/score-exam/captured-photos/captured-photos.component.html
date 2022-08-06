@@ -8,12 +8,12 @@
   <!--begin::Body-->
   <div class="card-body pt-2 pages_body">
     <!--begin::Item-->
-    <div class="d-flex align-items-center mb-10" *ngFor="let photo of capturedPhotos">
+    <div class="d-flex align-items-center mb-10" *ngFor="let photo of capturedPhotos; let i = index">
       <!--begin::Bullet-->
       <!-- <span class="bullet bullet-bar bg-success align-self-stretch"></span> -->
       <!--end::Bullet-->
       <!--begin::Text-->
-      <div class="d-flex flex-column ">
+      <div class="d-flex flex-column" (dblclick)="removePhoto(i)">
         <img [src]="photo.imageAsDataUrl" 
         class="capruted_photo_sheet"
         [width]="300"

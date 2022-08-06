@@ -32,4 +32,8 @@ export class CapturedPhotosComponent implements OnInit, OnDestroy {
     this.photoCapturedSubscription.unsubscribe();
   }
 
+  removePhoto(i){
+    this.captureService.removePhoto(i);
+  }
+
 }
